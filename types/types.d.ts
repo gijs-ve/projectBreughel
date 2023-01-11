@@ -1,18 +1,22 @@
 
+//User related
 type user = {
     id: string,
     name: string,
     mail: string,
     isAdmin: boolean,    
 }
-type category = "animals" | "landscape"
-type painter = user
 
+
+//Painting related
+type painter = user
+type category = "animals" | "landscape"
 type painting = {
     name: string,
     length: number,
     width: number,
     price: number,
-    painter: painter
-    category: category
+    painter: painter,
+    category: category,
+    isApproved: boolean
 }
