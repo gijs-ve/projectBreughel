@@ -1,22 +1,31 @@
-
 //User related
-type user = {
-    id: string,
-    name: string,
-    mail: string,
-    isAdmin: boolean,    
-}
-
+export type User = {
+    id: string;
+    name: string;
+    mail: string;
+    isAdmin: boolean;
+};
 
 //Painting related
-type painter = user
-type category = "animals" | "landscape"
-type painting = {
-    name: string,
-    length: number,
-    width: number,
-    price: number,
-    painter: painter,
-    category: category,
-    isApproved: boolean
-}
+export type Painter = User;
+export type Category = 'animals' | 'landscape';
+export type Painting = {
+    name: string;
+    length: number;
+    width: number;
+    price: number;
+    painter: Painter;
+    category: Category;
+    isApproved: boolean;
+};
+
+//Interface
+type buttonType = 'default' | 'icon';
+
+//React props
+export type ButtonProps = {
+    onClickEvent: function;
+    text?: string;
+    type?: string;
+    icon?: string;
+};
