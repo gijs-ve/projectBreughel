@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { Home } from './Home';
 import { Paintings } from './Paintings';
 import { UserSettings } from './UserSettings';
-export type page = {
+export type Page = {
     component: FC;
     navText: string;
     path: string;
 };
-const pages: page[] = [
+const pages: Page[] = [
     {
         component: Home,
         navText: 'Home',
@@ -16,12 +16,12 @@ const pages: page[] = [
     {
         component: Paintings,
         navText: 'Schilderijen',
-        path: '/paintings',
+        path: '/schilderijen',
     },
     {
         component: UserSettings,
         navText: 'Instellingen',
-        path: '/paintings',
+        path: '/user',
     },
 ];
 export { pages };

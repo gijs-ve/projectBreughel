@@ -1,8 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import { pages, page } from '../pages';
+import { Page, pages } from '../pages';
+import { FC } from 'react';
 const Router = () => {
-    const routes = pages.map((i: page) => {
-        return <Route path={`${i.path}`} element={`${i.component}`} />;
+    const routes = pages.map((i: Page) => {
+        const Component: FC = i.component;
+        return <Route path={`${i.path}`} element=<Component /> />;
     });
     return <Routes>{routes}</Routes>;
 };
