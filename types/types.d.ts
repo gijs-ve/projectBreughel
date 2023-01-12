@@ -17,6 +17,8 @@ export type Painting = {
     painter: Painter;
     category: Category;
     isApproved: boolean;
+    isPurchasable: boolean;
+    isSold: boolean;
 };
 
 //Interface
