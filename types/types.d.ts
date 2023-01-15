@@ -7,7 +7,10 @@ export type User = {
 };
 
 //Painting related
-export type Painter = User;
+export type Painter = {
+    id: string;
+    name: string;
+};
 export type Category = 'animals' | 'landscape';
 export type Painting = {
     name: string;
