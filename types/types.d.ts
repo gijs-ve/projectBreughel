@@ -11,14 +11,14 @@ export type Painter = {
     id: string;
     name: string;
 };
-export type Category = 'animals' | 'landscape';
+export type Filter = 'abstract' | 'animal' | 'blackWhite' | 'color' | 'gold';
 export type Painting = {
     name: string;
     length: number;
     width: number;
     price: number;
     painter: Painter;
-    category: Category;
+    filters: Filter[];
     isApproved: boolean;
     isPurchasable: boolean;
     isSold: boolean;
