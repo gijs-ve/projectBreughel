@@ -3,7 +3,7 @@ import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 const initialState = {};
 
 export const userSlice = createSlice({
-    name: 'game',
+    name: 'user',
     initialState,
     reducers: {},
 });
