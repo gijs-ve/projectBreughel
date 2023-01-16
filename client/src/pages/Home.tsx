@@ -1,5 +1,10 @@
+import { Button } from '../utility/Button';
 const Home = () => {
-    return <>asdasadsad</>;
+    return (
+        <>
+            <Button text="Bekijk collecties" />
+        </>
+    );
 };
 
 export { Home };
