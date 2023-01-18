@@ -29,7 +29,7 @@ type buttonType = 'default' | 'icon';
 
 //React props
 export type ButtonProps = {
-    onClickEvent: Function;
+    onClickEvent?: Function;
     text?: string;
     type?: string;
     icon?: string;
