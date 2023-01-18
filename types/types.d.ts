@@ -11,18 +11,19 @@ export type Painter = {
     id: string;
     name: string;
 };
-export type Filter = 'abstract' | 'animal' | 'blackWhite' | 'color' | 'gold';
+
 export type Painting = {
     name: string;
     length: number;
     width: number;
     price: number;
     painter: Painter;
-    filters: Filter[];
+    filters: string[];
     isApproved: boolean;
     isPurchasable: boolean;
     isSold: boolean;
 };
+export type Paintings = Painting[];
 
 //Interface
 type buttonType = 'default' | 'icon';
@@ -33,4 +34,14 @@ export type ButtonProps = {
     text?: string;
     type?: string;
     icon?: string;
+};
+
+//Redux state
+export type UserState = {
+    token?: string | null;
+    profile?: User | null;
+};
+
+export type RawState = {
+    userState: UserState;
 };
