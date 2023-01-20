@@ -45,3 +45,5 @@ export type UserState = {
 export type RawState = {
     userState: UserState;
 };
+
+//Server requests
