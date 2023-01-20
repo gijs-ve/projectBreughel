@@ -47,3 +47,8 @@ export type RawState = {
 };
 
 //Server requests
+export type request = {
+    body?: {
+        user?: User;
+    };
+};
