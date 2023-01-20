@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../utility/Button';
+import { Button } from '../components/Button';
 const Home = () => {
     const navigate = useNavigate();
     const navigateToCollections = () => {
