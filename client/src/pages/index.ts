@@ -10,7 +10,7 @@ export type Page = {
     component: FC;
     icon: string;
     navText: string;
-    inNavarbar: boolean;
+    inNavbar: boolean;
     path: string;
 };
 const pages: Page[] = [
@@ -18,42 +18,42 @@ const pages: Page[] = [
         component: Home,
         icon: 'none',
         navText: 'Home',
-        inNavarbar: true,
+        inNavbar: true,
         path: '/',
     },
     {
         component: Paintings,
         icon: 'none',
         navText: 'Collecties',
-        inNavarbar: true,
+        inNavbar: true,
         path: '/collecties',
     },
     {
         component: Offerte,
         icon: 'none',
         navText: 'Persoonlijk schilderij',
-        inNavarbar: true,
+        inNavbar: true,
         path: '/offerte',
     },
     {
         component: Contact,
         icon: 'none',
         navText: 'Contact',
-        inNavarbar: true,
+        inNavbar: true,
         path: '/contact',
     },
     {
         component: Winkelmand,
         icon: 'none',
         navText: 'Winkelmand',
-        inNavarbar: true,
+        inNavbar: true,
         path: '/winkelmand',
     },
     {
         component: Admin,
         icon: 'none',
         navText: 'Admin Paneel',
-        inNavarbar: false,
+        inNavbar: false,
         path: '/boekelo-zoo',
     },
 ];

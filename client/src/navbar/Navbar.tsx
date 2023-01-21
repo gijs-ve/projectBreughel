@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import { ReactElement } from 'react';
 const Navbar = () => {
     const Pages: ReactElement[] = pages.map((i: Page) => {
-        return <Link to={i.path}>{i.navText}</Link>;
+        return (
+            <Link key={i.path} to={i.path}>
+                {i.navText}
+            </Link>
+        );
     });
     return (
         <div className="flex-row flex-nowrap justify-center py-12 space-x-5">
