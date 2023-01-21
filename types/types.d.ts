@@ -45,10 +45,3 @@ export type UserState = {
 export type RawState = {
     userState: UserState;
 };
-
-//Server requests
-export type request = {
-    body?: {
-        user?: User;
-    };
-};
