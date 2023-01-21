@@ -1,5 +1,5 @@
 import { Page, pages } from '../pages';
-import { Logo } from '../utility/Logo';
+import { Logo } from '../components/Logo';
 import { Link } from 'react-router-dom';
 import { ReactElement } from 'react';
 const Navbar = () => {
