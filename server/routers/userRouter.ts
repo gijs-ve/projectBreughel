@@ -1,5 +1,5 @@
+import { Router, Request, Response } from 'express';
 const bcrypt = require('bcrypt');
-const { Router } = require('express');
 const { toJWT } = require('../auth/jwt');
 const authMiddleware = require('../auth/middleware');
 const Users = require('../models/').users;
@@ -8,7 +8,7 @@ const SALT_ROUNDS = process.env.SALT_ROUNDS;
 const router = new Router();
 
 //login
-router.post('/login', async (req, res, next) => {
+router.post('/login', async (req: Request, res: Response, next) => {
     try {
         const { name, password } = req.body;
 
@@ -40,6 +40,9 @@ router.post('/signup', async (req, res) => {
     const { password, name } = req.body;
     if (!password || !name) {
         return res.status(400).send('Please provide a  password and a name');
+    }
+    if (!SALT_ROUNDS) {
+        return res.status(500).send('Server error');
     }
 
     try {
