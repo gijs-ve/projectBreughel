@@ -1,3 +1,3 @@
 export const Winkelmand = () => {
-    return <></>;
+    return <>Winkelmand</>;
 };

@@ -44,7 +44,6 @@ router.post('/signup', async (req, res) => {
     if (!SALT_ROUNDS) {
         return res.status(500).send('Server error');
     }
-
     try {
         const newUser = await Users.create({
             password: bcrypt.hashSync(password, +SALT_ROUNDS),
