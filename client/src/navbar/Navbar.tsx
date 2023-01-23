@@ -3,7 +3,7 @@ import { Logo } from '../components/Logo';
 import { Link } from 'react-router-dom';
 import { ReactElement } from 'react';
 const Navbar = () => {
-    const Pages: ReactElement[] = pages.map((i: Page) => {
+    const Links: ReactElement[] = pages.map((i: Page) => {
         return (
             <Link key={i.path} to={i.path}>
                 {i.navText}
@@ -12,7 +12,7 @@ const Navbar = () => {
     });
     return (
         <div className="flex-row flex-nowrap justify-center py-12 space-x-5">
-            <Logo /> {Pages}
+            <Logo /> {Links}
         </div>
     );
 };
