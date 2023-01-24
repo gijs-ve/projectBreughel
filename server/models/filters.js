@@ -8,12 +8,13 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            filters.hasMany(models.paintingfilters);
         }
     }
     filters.init(
         {
             name: DataTypes.STRING,
+            allowNull: false,
         },
         {
             sequelize,

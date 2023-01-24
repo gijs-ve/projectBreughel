@@ -8,12 +8,17 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            // define association here
+            paintings.hasMany(models.paintingimages);
+            paintings.hasMany(models.paintingfilters);
         }
     }
     paintings.init(
         {
             name: DataTypes.STRING,
+            artist: {
+                allowNull: false,
+                type: DataTypes.STRING,
+            },
             width: DataTypes.INTEGER,
             height: DataTypes.INTEGER,
             price: DataTypes.INTEGER,

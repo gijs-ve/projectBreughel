@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('paintings', {
+        await queryInterface.createTable('paintingfilters', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -13,32 +13,25 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
-            artist: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            width: {
+            paintingId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
+                references: {
+                    key: 'id',
+                    model: 'paintings',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
-            height: {
+            filterId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
-            },
-            price: {
-                allowNull: false,
-                type: Sequelize.INTEGER,
-            },
-            isApproved: {
-                allowNull: false,
-                defaultValue: false,
-                type: Sequelize.BOOLEAN,
-            },
-            isPurchaseable: {
-                type: Sequelize.BOOLEAN,
-            },
-            isSold: {
-                type: Sequelize.BOOLEAN,
+                references: {
+                    key: 'id',
+                    model: 'filters',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
             createdAt: {
                 allowNull: false,
@@ -51,6 +44,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('paintings');
+        await queryInterface.dropTable('paintingfilters');
     },
 };

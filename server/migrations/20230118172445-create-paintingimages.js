@@ -13,6 +13,16 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
+            paintingId: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+                references: {
+                    key: 'id',
+                    model: 'paintings',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
