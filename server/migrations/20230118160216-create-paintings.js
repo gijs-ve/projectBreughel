@@ -13,9 +13,15 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
-            artist: {
+            painterId: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.INTEGER,
+                references: {
+                    key: 'id',
+                    model: 'painter',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
             width: {
                 allowNull: false,
