@@ -1,7 +1,7 @@
 const Users = require('../models').users;
 import { toData } from './jwt'
 
-async function auth(req, res, next) {
+export async function auth(req, res, next) {
     const auth =
         req.headers.authorization && req.headers.authorization.split(' ');
 

@@ -1,16 +1,17 @@
 import { Router, Request, Response } from 'express';
-const authMiddleware = require('../auth/middleware');
-const Users = require('../models/').users;
+import { auth as authMiddleware } from 'middleware/auth';
+import { admin as adminMiddleware } from 'middleware/admin';
+import { capitaliseFirstLetter } from 'utility/functions';
 const Filters = require('../models/').filters;
 
 const router = new Router();
 
 router.post(
     '/postFilter',
-    authMiddleware,
+    [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const { filter } = req.body;
+            const filter = capitaliseFirstLetter(req.body.filter)
             const foundFilter = Filters.findOne({ where: { name: filter } });
             if (foundFilter) {
                 return res
@@ -33,11 +34,11 @@ router.post(
 
 router.delete(
     '/deleteFilter',
-    authMiddleware,
+    [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const { filter } = req.body;
-            const foundFilter = Filters.findOne({ where: { name: filter } });
+            const { filterId } = req.body;
+            const foundFilter = Filters.findOne({ where: { id: filterId } });
             if (!foundFilter) {
                 return res
                     .status(400)
