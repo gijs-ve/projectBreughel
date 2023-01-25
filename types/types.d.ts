@@ -45,3 +45,10 @@ export type UserState = {
 export type RawState = {
     userState: UserState;
 };
+
+//Server types
+export type Data = {
+    user?: User;
+    filters?: string[];
+    message?: string;
+};
