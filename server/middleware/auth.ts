@@ -11,10 +11,9 @@ export async function auth(req, res, next) {
                 'This endpoint requires an Authorization header with a valid token',
         });
     }
-
     try {
-        const data = toData(auth[1]);
-        const user = await Users.findByPk(data.userId);
+        const payload = toData(auth[1]);
+        const user = await Users.findByPk(payload.userId);
         if (!user) {
             return res.status(404).send({ message: 'User does not exist' });
         }
@@ -41,5 +40,3 @@ export async function auth(req, res, next) {
         }
     }
 }
-
-module.exports = auth;

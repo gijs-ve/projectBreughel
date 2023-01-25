@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
+import { toJWT } from '../middleware/jwt'
+import { auth as authMiddleware } from '../middleware/auth';
 const bcrypt = require('bcrypt');
-const { toJWT } = require('../auth/jwt');
-const authMiddleware = require('../auth/middleware');
 const Users = require('../models/').users;
 const SALT_ROUNDS = process.env.SALT_ROUNDS;
 

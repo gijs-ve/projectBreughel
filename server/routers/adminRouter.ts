@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
-import { auth as authMiddleware } from 'middleware/auth';
-import { admin as adminMiddleware } from 'middleware/admin';
-import { capitaliseFirstLetter } from 'utility/functions';
+import { auth as authMiddleware } from '../middleware/auth';
+import { admin as adminMiddleware } from '../middleware/admin';
+import { capitaliseFirstLetter } from '../utility/functions';
 const Filters = require('../models/').filters;
 
 const router = new Router();
