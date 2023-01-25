@@ -11,6 +11,8 @@ const http = require('http');
 const server = http.createServer(app);
 const PORT = 4000;
 
+app.use(corsMiddleWare());
+app.use(express.json());
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 

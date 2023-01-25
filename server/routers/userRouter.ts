@@ -10,22 +10,20 @@ const router = new Router();
 //login
 router.post('/login', async (req: Request, res: Response, next) => {
     try {
-        const { name, password } = req.body;
+        console.log(req.body)
+        const { name, password } = req.body;       
 
         if (!name || !password) {
             return res
                 .status(400)
                 .send({ message: 'Please provide both email and password' });
         }
-
         const user = await Users.findOne({ where: { name } });
-
         if (!user || !bcrypt.compareSync(password, user.password)) {
             return res.status(400).send({
                 message: 'User with that email not found or password incorrect',
             });
         }
-
         delete user.dataValues['password']; // don't send back the password hash
         const token = toJWT({ userId: user.id });
         return res.status(200).send({ token, user: user.dataValues });

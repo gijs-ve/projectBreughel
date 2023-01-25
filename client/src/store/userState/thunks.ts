@@ -5,7 +5,7 @@ import { loginSuccess } from './slice';
 export const login = (name: string, password: string) => {
     return async (dispatch: any) => {
         try {
-            const response = await axios.post(`${apiUrl}/auth/login`, {
+            const response = await axios.post(`${apiUrl}/user/login`, {
                 name,
                 password,
             });
