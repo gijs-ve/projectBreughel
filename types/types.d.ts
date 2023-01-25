@@ -47,6 +47,9 @@ export type RawState = {
 };
 
 //Server types
+export type ServerResponse = {
+    data: Data;
+};
 export type Data = {
     user?: User;
     filters?: string[];
