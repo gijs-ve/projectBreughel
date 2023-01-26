@@ -4,11 +4,11 @@ import { apiUrl } from '../../config/constants';
 import { Data } from '../../../../types/types';
 import { getFilters } from '../../utility/functions';
 
-const FilterManage = () => {
+export const FilterManage = () => {
     const [filters, setFilters] = useState<[] | string[]>([]);
     useEffect(() => {
         const data = getFilters();
-        setFilters(data);
+        console.log(data)
     }, []);
     const CurrentFilters = filters.map((i: string) => {
         <>

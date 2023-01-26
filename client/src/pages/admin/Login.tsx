@@ -16,7 +16,7 @@ export const Login = () => {
     const whiteLabel =
         'text-white group flex items-center px-2 py-2 text-base font-medium rounded-md';
     useEffect(() => {
-        if (!token) {
+        if (token) {
             navigate('/');
         }
     }, [token, navigate]);

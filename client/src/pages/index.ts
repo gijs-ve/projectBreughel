@@ -54,7 +54,7 @@ const pages: Page[] = [
         icon: 'none',
         navText: 'Admin Paneel',
         inNavbar: false,
-        path: '/boekelo-zoo',
+        path: '/boekelo-zoo/*',
     },
 ];
 export { pages };
