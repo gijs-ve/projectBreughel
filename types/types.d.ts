@@ -8,17 +8,21 @@ export type User = {
 
 //Painting related
 export type Painter = {
-    id: string;
+    id: number;
     name: string;
 };
 
+export type Filter = {
+    id: number;
+    name: string;
+};
 export type Painting = {
     name: string;
     length: number;
     width: number;
     price: number;
     painter: Painter;
-    filters: string[];
+    filters: Filter[];
     isApproved: boolean;
     isPurchasable: boolean;
     isSold: boolean;
@@ -52,6 +56,7 @@ export type ServerResponse = {
 };
 export type Data = {
     user?: User;
-    filters?: string[];
+    filterId: number;
+    filters?: Filter[];
     message?: string;
 };

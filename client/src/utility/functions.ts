@@ -1,16 +1,22 @@
 import axios from 'axios';
 import { apiUrl } from '../config/constants';
-import { Painting, Paintings, Data } from '../../../types/types';
+import { Painting, Paintings, Data, Filter } from '../../../types/types';
 import { ServerData } from './dataTypes';
 
 export const filterPaintings = (
     paintingsArray: Paintings,
-    filterArray: string[],
+    filterArray: Filter[],
 ) => {
     if (filterArray.length === 0) return paintingsArray;
     const remainingArray = paintingsArray.filter((painting: Painting) => {
-        const filterCheckArray = filterArray.map((filter: string) => {
-            if (painting.filters.includes(filter)) return true;
+        const stringArray = filterArray.map((filter: Filter) => {
+            return filter.name;
+        });
+        const paintingFilters = painting.filters.map((i: Filter) => {
+            return i.name;
+        });
+        const filterCheckArray = stringArray.map((i: string) => {
+            if (paintingFilters.includes(i)) return true;
             return false;
         });
         if (filterCheckArray.includes(false)) return false;
@@ -24,9 +30,18 @@ export const getFilters = async () => {
         const { data, status } = await axios.get<ServerData>(
             `${apiUrl}/paintings/getFilters`,
         );
-        console.log(data)
+        console.log(data);
         if (!data) return;
         return data;
     } catch (error) {}
 };
 
+export const editFilter = async (filter: Filter) => {
+    try {
+        const { data, status } = await axios.patch<ServerData>(
+            `${apiUrl}/paintings/editFilter`,
+            { filter },
+        );
+        console.log(data);
+    } catch (error) {}
+};
