@@ -57,4 +57,38 @@ router.delete(
     },
 );
 
+router.patch(
+    '/updateFilter',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { filterId } = req.body;
+            const filter = capitaliseFirstLetter(req.body.filter)
+            const foundFilterByName = Filters.findOne({ where: { name: filter } });
+            if (foundFilterByName) {
+                return res
+                    .status(400)
+                    .send({ message: 'Filter is already in use' });
+            }
+             const foundFilterById = Filters.findOne({ where: { id: filterId } });
+            if (!foundFilterById) {
+                return res
+                    .status(400)
+                    .send({ message: 'Filter does not exist' });
+            }
+            foundFilterById.name = filter
+            await foundFilterById.save()
+            return res
+                .status(200)
+                .send({ message: 'Succesfully updated filter' });
+        } catch (error) {
+            console.log(error);
+            return res
+                .status(400)
+                .send({ message: 'Something went wrong, sorry' });
+        }
+    },
+);
+
+
 module.exports = router;
