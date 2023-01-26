@@ -59,7 +59,7 @@ export type ServerResponse = {
 };
 export type Data = {
     user?: User;
-    filterId: number;
+    filterId?: number;
     filters?: Filter[];
     message?: string;
 };
