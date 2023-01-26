@@ -15,6 +15,13 @@ export const FilterManage = () => {
         if (!data || !data.filters) return;
         setFilters(data.filters);
     };
+    const handleInput = (input: string, id: number) => {
+        const newFilters = filters.map((i: Filter) => {
+            if (i.id !== id) return i;
+            return { id, name: input };
+        });
+        setFilters(newFilters);
+    };
     const editFilter = async (i: Filter) => {
         patchFilter(i);
     };
@@ -24,7 +31,9 @@ export const FilterManage = () => {
     const CurrentFilters = filters.map((i: Filter) => {
         <>
             <div key={i.id}>
-                <input>{i.name}</input>{' '}
+                <input onChange={(e) => handleInput(e.target.value, i.id)}>
+                    {i.name}
+                </input>{' '}
                 <Button onClickEvent={() => editFilter(i)} />
             </div>
         </>;
