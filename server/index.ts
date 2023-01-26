@@ -3,6 +3,8 @@ const corsMiddleWare = require('cors');
 //Routers
 const userRouter = require('./routers/userRouter');
 const adminRouter = require('./routers/adminRouter');
+const paintingsRouter = require('./routers/paintingsRouter');
+
 //Server setup
 const express = require('express');
 const app = express();
@@ -15,5 +17,6 @@ app.use(corsMiddleWare());
 app.use(express.json());
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/paintings', paintingsRouter);
 
 server.listen(PORT, () => console.log(`SERVER ONLINE ${PORT}`));
