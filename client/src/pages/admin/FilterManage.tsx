@@ -6,9 +6,13 @@ import { getFilters } from '../../utility/functions';
 
 export const FilterManage = () => {
     const [filters, setFilters] = useState<[] | string[]>([]);
+    const placeFilters = async () => {
+        const data = await getFilters();
+        if (!data || !data.filters) return
+        setFilters(data.filters)
+    }
     useEffect(() => {
-        const data = getFilters();
-        console.log(data)
+        placeFilters()
     }, []);
     const CurrentFilters = filters.map((i: string) => {
         <>
