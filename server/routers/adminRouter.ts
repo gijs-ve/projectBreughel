@@ -11,7 +11,7 @@ router.post(
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const filter = capitaliseFirstLetter(req.body.filter)
+            const filter = capitaliseFirstLetter(req.body.filter);
             const foundFilter = Filters.findOne({ where: { name: filter } });
             if (foundFilter) {
                 return res
