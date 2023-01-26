@@ -49,6 +49,7 @@ export const FilterManage = (p: AdminProps) => {
         const [newFilter, setNewFilter] = useState<string>('TET ');
         return (
             <div>
+                <h1>Nieuw filter</h1>
                 <input
                     value={newFilter}
                     onChange={(e) => setNewFilter(e.target.value)}
@@ -59,6 +60,7 @@ export const FilterManage = (p: AdminProps) => {
     };
     return (
         <>
+            <h1>Lijst met filters</h1>
             {CurrentFilters} <AddFilter />
         </>
     );
