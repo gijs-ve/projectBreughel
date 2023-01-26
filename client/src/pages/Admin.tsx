@@ -6,10 +6,17 @@ export const Admin = () => {
     const navigate = useNavigate();
     return (
         <>
-            <div onClick={() => navigate('./paintings')}>
-                Wijzig schilderijen
+            <div className="flex-row  flex-wrap">
+                <div
+                    className="max-w-lg"
+                    onClick={() => navigate('./paintings')}
+                >
+                    Wijzig schilderijen
+                </div>
+                <div className="max-w-lg" onClick={() => navigate('./filters')}>
+                    Wijzig filters
+                </div>
             </div>
-            <div onClick={() => navigate('./filters')}>Wijzig filters</div>
             <AdminRouter />
         </>
     );
