@@ -15,6 +15,8 @@ const PORT = 4000;
 
 app.use(corsMiddleWare());
 app.use(express.json());
+
+//Router activation
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 app.use('/paintings', paintingsRouter);

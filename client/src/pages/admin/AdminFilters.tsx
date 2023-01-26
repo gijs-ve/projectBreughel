@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState, Dispatch } from 'react';
+import { useEffect, useState } from 'react';
 import { apiUrl } from '../../config/constants';
 import { AdminProps, Data, Filter } from '../../../../types/types';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../utility/functions';
 import { Button } from '../../components/Button';
 
-export const FilterManage = (p: AdminProps) => {
+export const AdminFilters = (p: AdminProps) => {
     const { token } = p;
     const [filters, setFilters] = useState<[] | Filter[]>([]);
     const [allowAddFilter, setAllowAddFilter] = useState<boolean>(false);
