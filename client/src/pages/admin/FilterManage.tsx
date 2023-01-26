@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch } from 'react';
 import { apiUrl } from '../../config/constants';
 import { AdminProps, Data, Filter } from '../../../../types/types';
 import {
@@ -13,6 +13,7 @@ import { Button } from '../../components/Button';
 export const FilterManage = (p: AdminProps) => {
     const { token } = p;
     const [filters, setFilters] = useState<[] | Filter[]>([]);
+    const [allowAddFilter, setAllowAddFilter] = useState<boolean>(false);
 
     useEffect(() => {
         getFilters();
@@ -50,10 +51,11 @@ export const FilterManage = (p: AdminProps) => {
         );
     });
     const AddFilter = () => {
-        const [newFilter, setNewFilter] = useState<string>('TET ');
+        const [newFilter, setNewFilter] = useState<string>('NAAM');
+        if (!allowAddFilter) return <></>;
         return (
             <div>
-                <h1>Nieuw filter</h1>
+                <h1>Nieuwe filter</h1>
                 <input
                     value={newFilter}
                     onChange={(e) => setNewFilter(e.target.value)}
@@ -65,7 +67,12 @@ export const FilterManage = (p: AdminProps) => {
     return (
         <>
             <h1>Lijst met filters</h1>
-            {CurrentFilters} <AddFilter />
+            {CurrentFilters}{' '}
+            <Button
+                text={allowAddFilter ? 'Hide add filter' : 'Show add filter'}
+                onClickEvent={() => setAllowAddFilter(!allowAddFilter)}
+            />
+            <AddFilter />
         </>
     );
 };
