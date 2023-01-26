@@ -39,6 +39,9 @@ export type ButtonProps = {
     type?: string;
     icon?: string;
 };
+export type AdminProps = {
+    token?: string | null | undefined;
+};
 
 //Redux state
 export type UserState = {
