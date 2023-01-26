@@ -16,15 +16,15 @@ export const AdminFilters = (p: AdminProps) => {
     const [allowAddFilter, setAllowAddFilter] = useState<boolean>(false);
 
     useEffect(() => {
+        const getFilters = async () => {
+            const data = await requestFilters();
+            if (!data || !data.filters) return;
+            setFilters(data.filters);
+        };
         getFilters();
     }, []);
     if (!token) return <>Log in om te wijzigen</>;
 
-    const getFilters = async () => {
-        const data = await requestFilters();
-        if (!data || !data.filters) return;
-        setFilters(data.filters);
-    };
     const handleInput = (input: string, id: number) => {
         const newFilters = filters.map((i: Filter) => {
             if (i.id !== id) return i;

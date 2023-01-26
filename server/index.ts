@@ -21,4 +21,5 @@ app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 app.use('/paintings', paintingsRouter);
 
+
 server.listen(PORT, () => console.log(`SERVER ONLINE ${PORT}`));

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { toJWT } from '../middleware/jwt'
+import { toJWT } from '../middleware/jwt';
 import { auth as authMiddleware } from '../middleware/auth';
 const bcrypt = require('bcrypt');
 const Users = require('../models/').users;
@@ -10,9 +10,7 @@ const router = new Router();
 //login
 router.post('/login', async (req: Request, res: Response, next) => {
     try {
-        console.log(req.body)
-        const { name, password } = req.body;       
-
+        const { name, password } = req.body;
         if (!name || !password) {
             return res
                 .status(400)

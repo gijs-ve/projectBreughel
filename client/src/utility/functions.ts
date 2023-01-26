@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiUrl } from '../config/constants';
-import { Painting, Paintings, Data, Filter } from '../../../types/types';
+import { Painting, Paintings, Filter } from '../../../types/types';
 import { ServerData } from './dataTypes';
 
 export const filterPaintings = (
@@ -27,10 +27,9 @@ export const filterPaintings = (
 
 export const getFilters = async () => {
     try {
-        const { data, status } = await axios.get<ServerData>(
+        const { data } = await axios.get<ServerData>(
             `${apiUrl}/paintings/getFilters`,
         );
-        console.log(data);
         if (!data) return;
         return data;
     } catch (error) {}
