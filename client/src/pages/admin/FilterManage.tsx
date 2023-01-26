@@ -6,9 +6,9 @@ import {
     getFilters as requestFilters,
     editFilter as patchFilter,
     addFilter,
+    deleteFilter,
 } from '../../utility/functions';
 import { Button } from '../../components/Button';
-import { FC } from 'react';
 
 export const FilterManage = (p: AdminProps) => {
     const { token } = p;
@@ -42,6 +42,10 @@ export const FilterManage = (p: AdminProps) => {
                     onChange={(e) => handleInput(e.target.value, i.id)}
                 ></input>{' '}
                 <Button text="Bewerk" onClickEvent={() => editFilter(i)} />
+                <Button
+                    text="Verwijder"
+                    onClickEvent={() => deleteFilter(i, token)}
+                />
             </div>
         );
     });

@@ -56,3 +56,12 @@ export const editFilter = async (filter: Filter) => {
         console.log(data);
     } catch (error) {}
 };
+
+export const deleteFilter = async (filter: Filter, token: string) => {
+    try {
+        await axios.delete<ServerData>(`${apiUrl}/admin/deleteFilter`, {
+            data: { filterId: filter.id },
+            headers: { Authorization: `Bearer ${token}` },
+        });
+    } catch (error) {}
+};

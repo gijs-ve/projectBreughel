@@ -7,7 +7,7 @@ import { selectToken } from '../store';
 const Navbar = () => {
     const token = useAppSelector(selectToken);
     const Links: ReactElement[] = pages.map((i: Page) => {
-        if (i.inNavbar) {
+        if (i.inNavbar || token) {
             return (
                 <Link key={i.path} to={i.path}>
                     {i.navText}
