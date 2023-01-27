@@ -12,6 +12,7 @@ export const filterPaintings = (
         const stringArray = filterArray.map((filter: Filter) => {
             return filter.name;
         });
+        if (!painting.filters) return;
         const paintingFilters = painting.filters.map((i: Filter) => {
             return i.name;
         });

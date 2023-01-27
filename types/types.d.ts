@@ -21,11 +21,11 @@ export type Painting = {
     length: number;
     width: number;
     price: number;
-    painter: Painter;
-    filters: Filter[];
-    isApproved: boolean;
-    isPurchasable: boolean;
-    isSold: boolean;
+    painter?: Painter;
+    filters?: Filter[];
+    isApproved?: boolean;
+    isPurchasable?: boolean;
+    isSold?: boolean;
 };
 export type Paintings = Painting[];
 
