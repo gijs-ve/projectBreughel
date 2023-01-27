@@ -1,16 +1,20 @@
-import { AdminFilters } from './AdminFilters';
-import { selectToken } from '../../store';
-import { useAppSelector } from '../../utility/hooks';
 import { Painting } from '../../../../types/types';
 import { useState } from 'react';
-export const AdminPaintings = () => {
+import { Button } from '../../components/Button';
+import { addPainting } from '../../utility/functions';
+import { useAppSelector } from '../../utility/hooks';
+import { selectToken } from '../../store';
+
+export const AdminAddPainting = () => {
+    const token = useAppSelector(selectToken);
     const initialPainting: Painting = {
-        name: 'Name',
+        name: 'Naam',
         length: 0,
         width: 0,
         price: 0,
     };
     const [painting, setPainting] = useState<Painting>(initialPainting);
+    if (!token) return <>Log eerst in!</>;
     const changePainting = (property: string, payload: string | number) => {
         switch (property) {
             case 'name':
@@ -32,7 +36,7 @@ export const AdminPaintings = () => {
         }
     };
     return (
-        <>
+        <div>
             <input
                 value={painting.name}
                 onChange={(e) => changePainting('name', e.target.value)}
@@ -53,6 +57,10 @@ export const AdminPaintings = () => {
                 onChange={(e) => changePainting('price', e.target.value)}
                 type="number"
             />
-        </>
+            <Button
+                onClickEvent={() => addPainting(token, painting)}
+                text="Voeg toe"
+            />
+        </div>
     );
 };

@@ -2,9 +2,41 @@ import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
 import { capitaliseFirstLetter } from '../utility/functions';
+const Paintings = require('../models/').paintings;
 const Filters = require('../models/').filters;
 
 const router = new Router();
+
+
+router.post(
+    '/postPainting',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const {data} = req.body
+            const {painting} = data
+            const newPainting = await Paintings.create({
+                name: painting.name,
+                painterId: 1,
+                width: painting.width,
+                height: painting.length,
+                price: painting.price,
+                isApproved: false,
+                isPurchaseable: false,
+                isSold: false,
+            })
+            return res.status(200).send({
+                message: 'Succesfully added painting',
+                painting: newPainting,
+            });
+        } catch (error) {
+            console.log(error);
+            return res
+                .status(400)
+                .send({ message: 'Something went wrong, sorry' });
+        }
+    },
+);
 
 router.post(
     '/postFilter',
