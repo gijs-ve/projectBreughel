@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { apiUrl } from '../../config/constants';
-import { AdminProps, Data, Filter } from '../../../../types/types';
+import { Filter } from '../../../../types/types';
 import {
     getFilters as requestFilters,
     editFilter as patchFilter,
@@ -9,18 +7,19 @@ import {
     deleteFilter,
 } from '../../utility/functions';
 import { Button } from '../../components/Button';
+import { useAppSelector } from '../../utility/hooks';
+import { selectToken } from '../../store';
 
-export const AdminFilters = (p: AdminProps) => {
-    const { token } = p;
+export const AdminFilters = () => {
+    const token = useAppSelector(selectToken);
     const [filters, setFilters] = useState<[] | Filter[]>([]);
     const [allowAddFilter, setAllowAddFilter] = useState<boolean>(false);
-
+    const getFilters = async () => {
+        const data = await requestFilters();
+        if (!data || !data.filters) return;
+        setFilters(data.filters);
+    };
     useEffect(() => {
-        const getFilters = async () => {
-            const data = await requestFilters();
-            if (!data || !data.filters) return;
-            setFilters(data.filters);
-        };
         getFilters();
     }, []);
     if (!token) return <>Log in om te wijzigen</>;
@@ -45,7 +44,10 @@ export const AdminFilters = (p: AdminProps) => {
                 <Button text="Bewerk" onClickEvent={() => editFilter(i)} />
                 <Button
                     text="Verwijder"
-                    onClickEvent={() => deleteFilter(i, token)}
+                    onClickEvent={() => {
+                        deleteFilter(i, token);
+                        getFilters();
+                    }}
                 />
             </div>
         );
@@ -60,7 +62,10 @@ export const AdminFilters = (p: AdminProps) => {
                     value={newFilter}
                     onChange={(e) => setNewFilter(e.target.value)}
                 />
-                <Button text="Voeg toe" onClickEvent={() => addFilter(token)} />
+                <Button
+                    text="Voeg toe"
+                    onClickEvent={() => addFilter(token, newFilter)}
+                />
             </div>
         );
     };

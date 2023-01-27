@@ -43,14 +43,15 @@ router.post(
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const filter = capitaliseFirstLetter(req.body.filter);
-            const foundFilter = Filters.findOne({ where: { name: filter } });
+            const filter = capitaliseFirstLetter(req.body.data.filter);
+            console.log(filter)
+            const foundFilter = await Filters.findOne({ where: { name: filter } });
             if (foundFilter) {
                 return res
                     .status(400)
                     .send({ message: 'Filter is already in use' });
             }
-            const newFilter = Filters.create({ name: filter });
+            const newFilter = await Filters.create({ name: filter });
             return res.status(200).send({
                 message: 'Succesfully added filter',
                 filter: newFilter,
@@ -70,7 +71,7 @@ router.delete(
     async (req: Request, res: Response, next) => {
         try {
             const { filterId } = req.body;
-            const foundFilter = Filters.findOne({ where: { id: filterId } });
+            const foundFilter = await Filters.findOne({ where: { id: filterId } });
             if (!foundFilter) {
                 return res
                     .status(400)
