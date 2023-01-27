@@ -49,8 +49,13 @@ export type UserState = {
     profile?: User | null;
 };
 
+export type PaintingState = {
+    paintings?: Painting[] | null;
+};
+
 export type RawState = {
-    userState: UserState;
+    userState?: UserState;
+    paintingState?: PaintingState;
 };
 
 //Server types

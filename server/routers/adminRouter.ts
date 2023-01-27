@@ -1,4 +1,4 @@
-import { messages } from 'utility/messages';
+import { messages } from '../utility/messages';
 import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
