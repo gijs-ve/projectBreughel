@@ -61,5 +61,7 @@ export type Data = {
     user?: User;
     filterId?: number;
     filters?: Filter[];
+    painting?: Painting;
+    paintings?: Painting[];
     message?: string;
 };

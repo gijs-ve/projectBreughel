@@ -1,3 +1,4 @@
+import { messages } from 'utility/messages';
 import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
@@ -7,14 +8,14 @@ const Filters = require('../models/').filters;
 
 const router = new Router();
 
-
+//---Painting related---//
 router.post(
     '/postPainting',
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const {data} = req.body
-            const {painting} = data
+            const { data } = req.body;
+            const { painting } = data;
             const newPainting = await Paintings.create({
                 name: painting.name,
                 painterId: 1,
@@ -24,28 +25,46 @@ router.post(
                 isApproved: false,
                 isPurchaseable: false,
                 isSold: false,
-            })
+            });
             return res.status(200).send({
                 message: 'Succesfully added painting',
                 painting: newPainting,
             });
         } catch (error) {
             console.log(error);
-            return res
-                .status(400)
-                .send({ message: 'Something went wrong, sorry' });
+            return res.status(400).send({ message: messages.serverError });
         }
     },
 );
 
+router.post(
+    '/getAllPaintings',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const allPaintings = Paintings.findAll();
+            return res.status(200).send({
+                message: 'Succesfully sent all paintings to admin',
+                paintings: allPaintings,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
+//---Filter related---//
 router.post(
     '/postFilter',
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
             const filter = capitaliseFirstLetter(req.body.data.filter);
-            console.log(filter)
-            const foundFilter = await Filters.findOne({ where: { name: filter } });
+            console.log(filter);
+            const foundFilter = await Filters.findOne({
+                where: { name: filter },
+            });
             if (foundFilter) {
                 return res
                     .status(400)
@@ -58,9 +77,7 @@ router.post(
             });
         } catch (error) {
             console.log(error);
-            return res
-                .status(400)
-                .send({ message: 'Something went wrong, sorry' });
+            return res.status(400).send({ message: messages.serverError });
         }
     },
 );
@@ -71,7 +88,9 @@ router.delete(
     async (req: Request, res: Response, next) => {
         try {
             const { filterId } = req.body;
-            const foundFilter = await Filters.findOne({ where: { id: filterId } });
+            const foundFilter = await Filters.findOne({
+                where: { id: filterId },
+            });
             if (!foundFilter) {
                 return res
                     .status(400)
@@ -83,9 +102,7 @@ router.delete(
                 .send({ message: 'Succesfully deleted filter' });
         } catch (error) {
             console.log(error);
-            return res
-                .status(400)
-                .send({ message: 'Something went wrong, sorry' });
+            return res.status(400).send({ message: messages.serverError });
         }
     },
 );
@@ -120,9 +137,7 @@ router.patch(
                 .send({ message: 'Succesfully updated filter' });
         } catch (error) {
             console.log(error);
-            return res
-                .status(400)
-                .send({ message: 'Something went wrong, sorry' });
+            return res.status(400).send({ message: messages.serverError });
         }
     },
 );
