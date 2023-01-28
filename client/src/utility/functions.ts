@@ -36,10 +36,11 @@ export const getFilters = async () => {
     } catch (error) {}
 };
 
-export const getAllPaintings = async () => {
+export const getAllPaintings = async (token: string) => {
     try {
         const { data } = await axios.get<ServerData>(
             `${apiUrl}/admin/getAllPaintings`,
+            { headers: { Authorization: `Bearer ${token}` } },
         );
         if (!data) return;
         return data;
