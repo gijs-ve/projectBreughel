@@ -12,7 +12,6 @@ router.get('/getFilters', async (req: Request, res: Response, next) => {
         if (!filters) {
             return res.status(400).send({ message: 'No filters were found' });
         }
-        console.log(filters);
         return res.status(200).send({
             message: 'Succesfully received filters',
             filters: filters,
