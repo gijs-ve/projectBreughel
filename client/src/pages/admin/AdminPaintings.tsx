@@ -21,7 +21,7 @@ export const AdminPaintings = () => {
         return allPaintings.map((i: Painting) => {
             return (
                 <>
-                    <h1>{i.name}</h1> <h1>Wijzig</h1>
+                    <h1>{i.name}</h1> <h1>Wijzig</h1> <h1>Verwijder</h1>
                 </>
             );
         });
