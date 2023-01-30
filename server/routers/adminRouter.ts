@@ -37,12 +37,12 @@ router.post(
     },
 );
 
-router.post(
+router.get(
     '/getAllPaintings',
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const allPaintings = Paintings.findAll();
+            const allPaintings = await Paintings.findAll();
             return res.status(200).send({
                 message: 'Succesfully sent all paintings to admin',
                 paintings: allPaintings,

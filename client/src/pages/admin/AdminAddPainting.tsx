@@ -9,7 +9,7 @@ export const AdminAddPainting = () => {
     const token = useAppSelector(selectToken);
     const initialPainting: Painting = {
         name: 'Naam',
-        length: 0,
+        height: 0,
         width: 0,
         price: 0,
     };
@@ -22,8 +22,8 @@ export const AdminAddPainting = () => {
                     setPainting({ ...painting, name: payload });
                 }
                 break;
-            case 'length':
-                setPainting({ ...painting, length: +payload });
+            case 'height': 
+                setPainting({ ...painting, height: +payload });
                 break;
             case 'width':
                 setPainting({ ...painting, width: +payload });
@@ -43,8 +43,8 @@ export const AdminAddPainting = () => {
                 type="text"
             />
             <input
-                value={painting.length}
-                onChange={(e) => changePainting('length', e.target.value)}
+                value={painting.height}
+                onChange={(e) => changePainting('height', e.target.value)}
                 type="number"
             />
             <input

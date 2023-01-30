@@ -17,11 +17,13 @@ export type Filter = {
     name: string;
 };
 export type Painting = {
+    id?: number;
     name: string;
-    length: number;
+    height: number;
     width: number;
     price: number;
     painter?: Painter;
+    painterId?: number;
     filters?: Filter[];
     isApproved?: boolean;
     isPurchasable?: boolean;
@@ -41,6 +43,11 @@ export type ButtonProps = {
 };
 export type AdminProps = {
     token?: string | null | undefined;
+};
+
+export type Props = {
+    painting?: Painting;
+    paintings?: Painting[];
 };
 
 //Redux state
