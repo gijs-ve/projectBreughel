@@ -16,8 +16,8 @@ export const AdminRouter = () => {
                 <p onClick={() => navigate('./paintings/addPainting')}>
                     Voeg een schilderij toe
                 </p>
-                <p onClick={() => navigate('./paintings/editPaintings')}>
-                    Wijzig schilderijen
+                <p onClick={() => navigate('./painters')}>
+                    Wijzig schilders
                 </p>
                 <p onClick={() => navigate('./filters')}>Wijzig filters</p>
             </div>

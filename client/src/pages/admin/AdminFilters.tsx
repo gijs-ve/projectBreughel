@@ -32,7 +32,7 @@ export const AdminFilters = () => {
         setFilters(newFilters);
     };
     const editFilter = async (i: Filter) => {
-        patchFilter(i);
+        patchFilter(token, i);
     };
     const CurrentFilters = filters.map((i: Filter) => {
         return (

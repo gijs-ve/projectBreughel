@@ -75,11 +75,14 @@ export const addFilter = async (token: string, filter: string) => {
     }
 };
 
-export const editFilter = async (filter: Filter) => {
+export const editFilter = async (token: string, filter: Filter) => {
     try {
         const { data, status } = await axios.patch<ServerData>(
-            `${apiUrl}/paintings/editFilter`,
-            { filter },
+            `${apiUrl}/admin/editFilter`,
+            {
+                data: { newFilterName: filter.name, filterId: filter.id },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
         );
         console.log(data);
     } catch (error) {}
