@@ -44,7 +44,7 @@ router.post(
         try {
             const { data } = req.body;
             const { paintingId } = data;
-            const changedPainting = await Paintings.find({where: {id: paintingId}})
+            const changedPainting = await Paintings.findOne({where: {id: paintingId}})
             changedPainting.isApproved = !changedPainting.isApproved
             await changedPainting.save();
             return res.status(200).send({

@@ -88,12 +88,13 @@ export const editFilter = async (token: string, filter: Filter) => {
     } catch (error) {}
 };
 
-export const changeApproved = async (id: number, token: string) => {
+export const changeApproved = async (id: number, token: string | null) => {
     try {
-        await axios.delete<ServerData>(`${apiUrl}/admin/changeApprovedStatus`, {
-            data: { paintingId: id },
-            headers: { Authorization: `Bearer ${token}` },
-        });
+        if (!token) return
+        await axios.post<ServerData>(`${apiUrl}/admin/changeApprovedStatus`, {
+            data: { paintingId: id },            
+        },
+        { headers: { Authorization: `Bearer ${token}` } },);
     } catch (error) {}
 };
 
