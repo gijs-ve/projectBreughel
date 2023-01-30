@@ -37,6 +37,26 @@ router.post(
     },
 );
 
+router.post(
+    '/changeApprovedStatus',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { paintingId } = data;
+            const changedPainting = await Paintings.find({where: {id: paintingId}})
+            changedPainting.isApproved = !changedPainting.isApproved
+            await changedPainting.save();
+            return res.status(200).send({
+                message: 'Succesfully updated painting',
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
 router.get(
     '/getAllPaintings',
     [authMiddleware, adminMiddleware],

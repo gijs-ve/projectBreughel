@@ -88,9 +88,18 @@ export const editFilter = async (token: string, filter: Filter) => {
     } catch (error) {}
 };
 
+export const changeApproved = async (id: number, token: string) => {
+    try {
+        await axios.delete<ServerData>(`${apiUrl}/admin/changeApprovedStatus`, {
+            data: { paintingId: id },
+            headers: { Authorization: `Bearer ${token}` },
+        });
+    } catch (error) {}
+};
+
 export const deleteFilter = async (filter: Filter, token: string) => {
     try {
-        await axios.delete<ServerData>(`${apiUrl}/admin/deleteFilter`, {
+        await axios.delete<ServerData>(`${apiUrl}/admin/deletePainting`, {
             data: { filterId: filter.id },
             headers: { Authorization: `Bearer ${token}` },
         });

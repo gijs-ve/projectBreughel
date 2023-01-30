@@ -1,5 +1,5 @@
 import { Props } from '../../../types/types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Default = () => {
   return ( <tr>
@@ -13,6 +13,7 @@ const Default = () => {
 
 export const PaintingRow = (p: Props) => {
     const { painting } = p;
+    const navigate = useNavigate()
     if (!painting)
         return (
            <Default />
@@ -26,7 +27,7 @@ export const PaintingRow = (p: Props) => {
             <td className="pl-12">{id}</td>
             <td className="pl-12">{name}</td>
             <td className="pl-12">{painterId}</td>
-            <Link key={id} to={id.toString()}><td className="pl-8">Wijzig</td></Link>
+            <td className="pl-8" onClick={() => navigate(`${id.toString()}`)}>Wijzig</td>
             <td className="pl-8">Verwijder</td>
         </tr>
     );
