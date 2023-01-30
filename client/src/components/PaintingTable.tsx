@@ -21,7 +21,7 @@ export const PaintingTable = () => {
     const Paintings = () => {
         return allPaintings.map((i: Painting) => {
             return (
-                    <PaintingRow painting={i} />
+                    <PaintingRow key={i.id} painting={i} />
             );
         });
     };

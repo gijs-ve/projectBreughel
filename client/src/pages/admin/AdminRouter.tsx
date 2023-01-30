@@ -23,7 +23,7 @@ export const AdminRouter = () => {
             </div>
             <div className="pt-24">
                 <Routes>
-                    <Route path="/paintings" element=<AdminPaintings /> />
+                    <Route path="/paintings/*" element=<AdminPaintings /> />
                     <Route
                         path="/paintings/addPainting"
                         element=<AdminAddPainting />
