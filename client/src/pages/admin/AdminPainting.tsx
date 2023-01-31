@@ -29,13 +29,7 @@ export const AdminPainting = () => {
         if (!painters) return <option value={1}>{'Default'}</option>;
         const options = painters.map((i: Painter) => {
             return (
-                <option
-                    key={i.id}
-                    value={i.id}
-                    onClick={(e) =>
-                        setPainting({ ...painting, painterId: i.id })
-                    }
-                >
+                <option key={i.id} value={i.id}>
                     {i.name}
                 </option>
             );
