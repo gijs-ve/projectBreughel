@@ -22,16 +22,20 @@ router.get(
                 where: { id },
                 include: [
                     { model: Painters, attributes: ['name', 'id'] },
-                    { model: PaintingFilters },
+                    { model: PaintingFilters, include: { model: Filters } },
                 ],
             });
             const painters = await Painters.findAll({
+                attributes: ['name', 'id'],
+            });
+            const filters = await Filters.findAll({
                 attributes: ['name', 'id'],
             });
             return res.status(200).send({
                 message: `Succesfully found painting with id ${id}`,
                 painting: foundPainting,
                 painters: painters,
+                filters: filters,
             });
         } catch (error) {
             console.log(error);
