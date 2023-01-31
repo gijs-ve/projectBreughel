@@ -75,5 +75,6 @@ export type Data = {
     filters?: Filter[];
     painting?: Painting;
     paintings?: Painting[];
+    painters?: Painter[];
     message?: string;
 };

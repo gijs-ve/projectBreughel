@@ -1,29 +1,53 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Painting } from '../../../../types/types';
+import { Painter, Painting } from '../../../../types/types';
 import { getPaintingById } from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';
 import { selectToken } from '../../store';
+import { Button } from '../../components/Button';
 
 export const AdminPainting = () => {
     const { id } = useParams();
     const token = useAppSelector(selectToken);
     const [painting, setPainting] = useState<Painting | null>(null);
+    const [painters, setPainters] = useState<Painter[] | null>(null);
     useEffect(() => {
         if (!token || !id) return;
         const fetchAllPaintings = async () => {
             const data = await getPaintingById(token, +id);
             if (!data || !data.painting) return;
+
             setPainting(data.painting);
+            if (!data.painters) return;
+            setPainters(data.painters);
         };
         fetchAllPaintings();
     }, []);
     if (!painting) return <>Geen schilderij gevonden met dit ID!</>;
+
+    const PainterOptions = () => {
+        if (!painters) return <option value={1}>{'Default'}</option>;
+        const options = painters.map((i: Painter) => {
+            return (
+                <option
+                    key={i.id}
+                    value={i.id}
+                    onClick={(e) =>
+                        setPainting({ ...painting, painterId: i.id })
+                    }
+                >
+                    {i.name}
+                </option>
+            );
+        });
+        return options;
+    };
     return (
         <div className="flex-col inline-flex justify-center">
             <h1>
                 {painting.name} {`(ID ${painting.id}) `}
-                door {painting.painterId}
+                door{' '}
+                {painting.painter ? painting.painter.name : painting.painterId}
             </h1>
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
                 <h1>Naam</h1>
@@ -34,6 +58,16 @@ export const AdminPainting = () => {
                         setPainting({ ...painting, name: e.target.value })
                     }
                 />
+            </div>
+            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
+                <h1>Schilder</h1>
+                <select
+                    onChange={(e) =>
+                        setPainting({ ...painting, painterId: +e.target.value })
+                    }
+                >
+                    {PainterOptions()}
+                </select>
             </div>
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
                 <h1>Lengte</h1>
@@ -104,6 +138,8 @@ export const AdminPainting = () => {
                     }
                 />
             </div>
+            <Button text="Opslaan" onClickEvent={() => console.log(painting)} />
+            <h1>Filters</h1>
 
             <h1>Afbeeldingen</h1>
         </div>

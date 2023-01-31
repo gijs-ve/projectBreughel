@@ -3,7 +3,9 @@ import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
 import { capitaliseFirstLetter } from '../utility/functions';
+const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
+const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
 
 const router = new Router();
@@ -16,10 +18,20 @@ router.get(
     async (req: Request, res: Response, next) => {
         try {
             const { id } = req.params;
-            const foundPainting = await Paintings.findOne({ where: { id } });
+            const foundPainting = await Paintings.findOne({
+                where: { id },
+                include: [
+                    { model: Painters, attributes: ['name', 'id'] },
+                    { model: PaintingFilters },
+                ],
+            });
+            const painters = await Painters.findAll({
+                attributes: ['name', 'id'],
+            });
             return res.status(200).send({
                 message: `Succesfully found painting with id ${id}`,
                 painting: foundPainting,
+                painters: painters,
             });
         } catch (error) {
             console.log(error);
