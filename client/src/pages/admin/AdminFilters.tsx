@@ -53,7 +53,7 @@ export const AdminFilters = () => {
         );
     });
     const AddFilter = () => {
-        const [newFilter, setNewFilter] = useState<string>('NAAM');
+        const [newFilter, setNewFilter] = useState<string>('Filter');
         if (!allowAddFilter) return <></>;
         return (
             <div>

@@ -13,7 +13,6 @@ export const PaintingTable = () => {
         const fetchAllPaintings = async () => {
             const data = await getAllPaintings(token);
             if (!data || !data.paintings) return;
-
             setAllpaintings(data.paintings);
         };
         fetchAllPaintings();
@@ -26,13 +25,25 @@ export const PaintingTable = () => {
     });
     const ApprovedPaintings = () => {
         const paintings = approvedPaintings.map((i: Painting) => {
-            return <PaintingRow key={i.id} painting={i} />;
+            return (
+                <PaintingRow
+                    key={i.id}
+                    painting={i}
+                    functions={{ setAllpaintings }}
+                />
+            );
         });
         return paintings;
     };
     const UnapprovedPaintings = () => {
         const paintings = unapprovedPaintings.map((i: Painting) => {
-            return <PaintingRow key={i.id} painting={i} />;
+            return (
+                <PaintingRow
+                    key={i.id}
+                    painting={i}
+                    functions={{ setAllpaintings }}
+                />
+            );
         });
         return paintings;
     };

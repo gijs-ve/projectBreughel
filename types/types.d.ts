@@ -46,6 +46,8 @@ export type AdminProps = {
 };
 
 export type Props = {
+    token?: string;
+    functions?: { setAllpaintings?: Function };
     painting?: Painting;
     paintings?: Painting[];
 };
