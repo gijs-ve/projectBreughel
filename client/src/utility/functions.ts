@@ -47,6 +47,17 @@ export const getAllPaintings = async (token: string) => {
     } catch (error) {}
 };
 
+export const getPaintingById = async (token: string, id: number) => {
+    try {
+        const { data } = await axios.get<ServerData>(
+            `${apiUrl}/admin/getPaintingById/${id}`,
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+        if (!data) return;
+        return data;
+    } catch (error) {}
+};
+
 export const addPainting = async (token: string, painting: Painting) => {
     try {
         const { data, status } = await axios.post<ServerData>(
@@ -90,11 +101,14 @@ export const editFilter = async (token: string, filter: Filter) => {
 
 export const changeApproved = async (id: number, token: string | null) => {
     try {
-        if (!token) return
-        await axios.post<ServerData>(`${apiUrl}/admin/changeApprovedStatus`, {
-            data: { paintingId: id },            
-        },
-        { headers: { Authorization: `Bearer ${token}` } },);
+        if (!token) return;
+        await axios.post<ServerData>(
+            `${apiUrl}/admin/changeApprovedStatus`,
+            {
+                data: { paintingId: id },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
     } catch (error) {}
 };
 

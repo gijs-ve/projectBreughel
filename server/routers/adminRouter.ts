@@ -9,6 +9,24 @@ const Filters = require('../models/').filters;
 const router = new Router();
 
 //---Painting related---//
+
+router.get(
+    '/getPaintingById/:id',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { id } = req.params;
+            const foundPainting = await Paintings.findOne({ where: { id } });
+            return res.status(200).send({
+                message: `Succesfully found painting with id ${id}`,
+                painting: foundPainting,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
 router.post(
     '/postPainting',
     [authMiddleware, adminMiddleware],
@@ -44,8 +62,10 @@ router.post(
         try {
             const { data } = req.body;
             const { paintingId } = data;
-            const changedPainting = await Paintings.findOne({where: {id: paintingId}})
-            changedPainting.isApproved = !changedPainting.isApproved
+            const changedPainting = await Paintings.findOne({
+                where: { id: paintingId },
+            });
+            changedPainting.isApproved = !changedPainting.isApproved;
             await changedPainting.save();
             return res.status(200).send({
                 message: 'Succesfully updated painting',
@@ -132,11 +152,11 @@ router.patch(
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const {data} = req.body
-            const { filterId, newFilterName } = data
-            
-            console.log(filterId)
-            console.log(newFilterName)
+            const { data } = req.body;
+            const { filterId, newFilterName } = data;
+
+            console.log(filterId);
+            console.log(newFilterName);
             const filter = capitaliseFirstLetter(newFilterName);
             const foundFilterByName = await Filters.findOne({
                 where: { name: newFilterName },
