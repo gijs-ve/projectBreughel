@@ -6,7 +6,7 @@ import {
     Painting,
     PaintingFilter,
 } from '../../../../types/types';
-import { getPaintingById } from '../../utility/functions';
+import { getPaintingById, addFilterToPainting } from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';
 import { selectToken } from '../../store';
 import { Button } from '../../components/Button';
@@ -79,7 +79,13 @@ export const AdminPainting = () => {
                 <select onChange={(e) => setNewFilter(+e.target.value)}>
                     {options}
                 </select>
-                <Button text="Toevoegen" />
+                <Button
+                    text="Toevoegen"
+                    onClickEvent={() => {
+                        if (!token || !painting.id || !newFilter) return;
+                        addFilterToPainting(token, painting.id, newFilter);
+                    }}
+                />
             </div>
         );
     };

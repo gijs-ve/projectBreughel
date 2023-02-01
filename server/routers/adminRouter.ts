@@ -78,6 +78,13 @@ router.post(
         try {
             const { data } = req.body;
             const { paintingId, filterId } = data;
+            const foundFilter = await PaintingFilters.findOne({
+                where: { paintingId: paintingId, filterId: filterId },
+            });
+            if (foundFilter)
+                return res.status(400).send({
+                    message: 'Filter bestaat al',
+                });
             const newPaintingFilter = await PaintingFilters.create({
                 paintingId,
                 filterId,
