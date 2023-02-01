@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             paintings.hasMany(models.paintingimages);
             paintings.hasMany(models.paintingfilters);
             paintings.belongsTo(models.painters);
+            paintings.hasOne(models.favorites);
         }
     }
     paintings.init(
