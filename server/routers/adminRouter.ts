@@ -1,8 +1,10 @@
+import { Filter } from '../../types/types';
 import { messages } from '../utility/messages';
 import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
 import { capitaliseFirstLetter } from '../utility/functions';
+import { Filterable } from 'sequelize';
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
@@ -77,21 +79,30 @@ router.post(
     async (req: Request, res: Response, next) => {
         try {
             const { data } = req.body;
-            const { paintingId, filterId } = data;
-            const foundFilter = await PaintingFilters.findOne({
-                where: { paintingId: paintingId, filterId: filterId },
+            const { paintingId, filters } = data;
+            const foundFilters = await PaintingFilters.findAll({
+                where: { paintingId },
             });
-            if (foundFilter)
-                return res.status(400).send({
-                    message: 'Filter bestaat al',
+            const bulkArray = filters
+                .filter(async (i: Filter) => {
+                    const foundFilter = await PaintingFilters.findOne({
+                        where: { paintingId, filterId: i.id },
+                    });
+                    if (!foundFilter) {
+                        return true;
+                    }
+                    return false;
+                })
+                .map((i: Filter) => {
+                    return { paintingId, filterId: i.id };
                 });
-            const newPaintingFilter = await PaintingFilters.create({
-                paintingId,
-                filterId,
+            await PaintingFilters.bulkCreate(bulkArray);
+            const newPainting = await Paintings.findOne({
+                where: { id: paintingId },
             });
             return res.status(200).send({
-                message: 'Succesfully added painting',
-                paintingfilter: newPaintingFilter,
+                message: 'Filter(s) toegevoegd aan schilderij',
+                painting: newPainting,
             });
         } catch (error) {
             console.log(error);

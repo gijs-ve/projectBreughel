@@ -32,6 +32,7 @@ export const AdminPainting = () => {
         setPainters(data.painters);
         if (!data.filters) return;
         setFilters(data.filters);
+        console.log('fetchPainting');
     };
     useEffect(() => {
         fetchPainting();
@@ -152,7 +153,7 @@ export const AdminPainting = () => {
                     <FilterOptions
                         filters={filters}
                         painting={painting}
-                        functions={{ fetchPainting }}
+                        functions={{ setPainting }}
                     />
                 ) : (
                     <></>
@@ -210,14 +211,14 @@ const FilterOptions = (p: Props) => {
     };
     const options = newFilters.map((i: Filter) => {
         return (
-            <>
+            <div key={i.id}>
                 <input
                     type="checkbox"
                     defaultChecked={i.status}
                     onChange={() => handleOnChange(i.id)}
                 />
                 {i.name}
-            </>
+            </div>
         );
     });
 
@@ -227,11 +228,17 @@ const FilterOptions = (p: Props) => {
             !painting.id ||
             !newFilters ||
             !functions ||
-            !functions.fetchPainting
+            !functions.setPainting
         )
             return;
-        await addFilterToPainting(token, painting.id, newFilters);
-        await functions.fetchPainting();
+        const newPainting = await addFilterToPainting(
+            token,
+            painting.id,
+            newFilters,
+        );
+        console.log(newPainting);
+        if (!newPainting) return;
+        functions.setPainting(newPainting);
     };
     return (
         <div className="flex-col inline-flex justify-center">
