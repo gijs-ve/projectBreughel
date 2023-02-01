@@ -49,7 +49,12 @@ export type AdminProps = {
 
 export type Props = {
     token?: string;
-    functions?: { setAllpaintings?: Function; setPainting?: Function };
+    functions?: {
+        setAllpaintings?: Function;
+        setPainting?: Function;
+        fetchPainting?: Function;
+    };
+    id?: number | string;
     filters?: Filter[];
     painting?: Painting;
     paintings?: Painting[];

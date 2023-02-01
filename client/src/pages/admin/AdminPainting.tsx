@@ -23,7 +23,7 @@ export const AdminPainting = () => {
     const [painters, setPainters] = useState<Painter[] | null>(null);
     const [filters, setFilters] = useState<Filter[] | null>(null);
 
-    const fetchPainting = async () => {
+    const fetchPainting = async (token: string, id: string) => {
         if (!token || !id) return;
         const data = await getPaintingById(token, +id);
         if (!data || !data.painting) return;
@@ -35,7 +35,8 @@ export const AdminPainting = () => {
         console.log('fetchPainting');
     };
     useEffect(() => {
-        fetchPainting();
+        if (!token || !id) return;
+        fetchPainting(token, id);
     }, []);
     if (!painting) return <>Geen schilderij gevonden met dit ID!</>;
 
@@ -153,7 +154,8 @@ export const AdminPainting = () => {
                     <FilterOptions
                         filters={filters}
                         painting={painting}
-                        functions={{ setPainting }}
+                        functions={{ fetchPainting }}
+                        id={id}
                     />
                 ) : (
                     <></>
@@ -170,7 +172,7 @@ const FilterOptions = (p: Props) => {
     const [filtersOnPainting, setFiltersOnPainting] = useState<string[] | null>(
         null,
     );
-    const { filters, painting, functions } = p;
+    const { filters, painting, functions, id } = p;
     useEffect(() => {
         if (!painting || !filters || !painting.paintingfilters) return;
         const currentOptions = painting.paintingfilters.map(
@@ -188,7 +190,7 @@ const FilterOptions = (p: Props) => {
             });
         setNewFilters(newOptions);
         setFiltersOnPainting(currentOptions);
-    }, []);
+    }, [filters]);
     console.log(painting);
     if (
         !painting ||
@@ -228,7 +230,7 @@ const FilterOptions = (p: Props) => {
             !painting.id ||
             !newFilters ||
             !functions ||
-            !functions.setPainting
+            !functions.fetchPainting
         )
             return;
         const newPainting = await addFilterToPainting(
@@ -238,7 +240,7 @@ const FilterOptions = (p: Props) => {
         );
         console.log(newPainting);
         if (!newPainting) return;
-        functions.setPainting(newPainting);
+        functions.fetchPainting(token, id);
     };
     return (
         <div className="flex-col inline-flex justify-center">

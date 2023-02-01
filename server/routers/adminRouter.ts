@@ -4,7 +4,6 @@ import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
 import { capitaliseFirstLetter } from '../utility/functions';
-import { Filterable } from 'sequelize';
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
@@ -80,15 +79,15 @@ router.post(
         try {
             const { data } = req.body;
             const { paintingId, filters } = data;
-            const foundFilters = await PaintingFilters.findAll({
+            const rawFilters = await PaintingFilters.findAll({
                 where: { paintingId },
             });
+            const foundFilters = rawFilters.map((i: any) => {
+                return i.dataValues.filterId;
+            });
             const bulkArray = filters
-                .filter(async (i: Filter) => {
-                    const foundFilter = await PaintingFilters.findOne({
-                        where: { paintingId, filterId: i.id },
-                    });
-                    if (!foundFilter) {
+                .filter((i: Filter) => {
+                    if (!foundFilters.includes(i.id)) {
                         return true;
                     }
                     return false;
@@ -99,6 +98,10 @@ router.post(
             await PaintingFilters.bulkCreate(bulkArray);
             const newPainting = await Paintings.findOne({
                 where: { id: paintingId },
+                include: [
+                    { model: Painters, attributes: ['name', 'id'] },
+                    { model: PaintingFilters, include: { model: Filters } },
+                ],
             });
             return res.status(200).send({
                 message: 'Filter(s) toegevoegd aan schilderij',
