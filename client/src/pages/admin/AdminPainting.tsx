@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Filter, Painter, Painting } from '../../../../types/types';
+import {
+    Filter,
+    Painter,
+    Painting,
+    PaintingFilter,
+} from '../../../../types/types';
 import { getPaintingById } from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';
 import { selectToken } from '../../store';
 import { Button } from '../../components/Button';
-import { isObjectBindingPattern } from 'typescript';
 
 export const AdminPainting = () => {
     const { id } = useParams();
@@ -44,24 +48,41 @@ export const AdminPainting = () => {
 
     const FilterOptions = () => {
         console.log(painting);
-        if (!filters || !painting.filters) return;
+        if (!filters || !painting.paintingfilters) return;
 
-        const filtersOnPainting = painting.filters.map((i: Filter) => {
-            return i.name;
-        });
+        const filtersOnPainting = painting.paintingfilters.map(
+            (i: PaintingFilter) => {
+                return i.filter.name;
+            },
+        );
         console.log(filtersOnPainting);
         const newOptions = filters.filter((i: Filter) => {
             if (filtersOnPainting.length === 0) return true;
             return !filtersOnPainting.includes(i.name);
         });
-        const options = newOptions.map((i: Painter) => {
+        const currentOptions = filtersOnPainting.map((i: string) => {
+            return <>{i}</>;
+        });
+        const options = newOptions.map((i: Filter) => {
             return (
                 <option key={i.id} value={i.id}>
                     {i.name}
                 </option>
             );
         });
-        return options;
+
+        return (
+            <div className="flex-col inline-flex justify-center">
+                {' '}
+                <h1>Huidige filters</h1>
+                {currentOptions}
+                <h1>Voeg filter toe</h1>
+                <select onChange={(e) => setNewFilter(+e.target.value)}>
+                    {options}
+                </select>
+                <Button text="Toevoegen" />
+            </div>
+        );
     };
 
     return (
@@ -162,10 +183,7 @@ export const AdminPainting = () => {
             </div>
             <Button text="Opslaan" onClickEvent={() => console.log(painting)} />
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Filters</h1>
-                <select onChange={(e) => setNewFilter(+e.target.value)}>
-                    {FilterOptions()}
-                </select>
+                {FilterOptions()}
             </div>
             <h1>Afbeeldingen</h1>
         </div>

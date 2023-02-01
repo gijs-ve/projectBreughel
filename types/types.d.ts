@@ -25,6 +25,7 @@ export type Painting = {
     painter?: Painter;
     painterId?: number;
     filters?: Filter[];
+    paintingfilters?: PaintingFilter[];
     isApproved?: boolean;
     isPurchasable?: boolean;
     isSold?: boolean;
@@ -71,9 +72,17 @@ export type RawState = {
 export type ServerResponse = {
     data: Data;
 };
+
+type PaintingFilter = {
+    filter: Filter;
+    filterId: number;
+    id: number;
+    paintingId: number;
+};
 export type Data = {
     user?: User;
     filterId?: number;
+    paintingfilters?: PaintingFilter[];
     filters?: Filter[];
     painting?: Painting;
     paintings?: Painting[];
