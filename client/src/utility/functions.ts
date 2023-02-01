@@ -86,6 +86,24 @@ export const addFilter = async (token: string, filter: string) => {
     }
 };
 
+export const addFilterToPainting = async (
+    token: string,
+    paintingId: number,
+    filterId: number,
+) => {
+    try {
+        const { data, status } = await axios.post<ServerData>(
+            `${apiUrl}/admin/postFilterPainting`,
+            {
+                data: { paintingId, filterId },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const editFilter = async (token: string, filter: Filter) => {
     try {
         const { data, status } = await axios.patch<ServerData>(

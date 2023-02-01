@@ -72,6 +72,27 @@ router.post(
 );
 
 router.post(
+    '/postFilterPainting',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { paintingId, filterId } = data;
+            const newPaintingFilter = await PaintingFilters.create({
+                paintingId,
+                filterId,
+            });
+            return res.status(200).send({
+                message: 'Succesfully added painting',
+                paintingfilter: newPaintingFilter,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+router.post(
     '/changeApprovedStatus',
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {

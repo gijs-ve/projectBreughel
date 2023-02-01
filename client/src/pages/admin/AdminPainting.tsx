@@ -55,7 +55,6 @@ export const AdminPainting = () => {
                 return i.filter.name;
             },
         );
-        console.log(filtersOnPainting);
         const newOptions = filters.filter((i: Filter) => {
             if (filtersOnPainting.length === 0) return true;
             return !filtersOnPainting.includes(i.name);
