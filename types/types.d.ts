@@ -15,6 +15,7 @@ export type Painter = {
 export type Filter = {
     id: number;
     name: string;
+    status?: boolean;
 };
 export type Painting = {
     id?: number;
@@ -48,7 +49,8 @@ export type AdminProps = {
 
 export type Props = {
     token?: string;
-    functions?: { setAllpaintings?: Function };
+    functions?: { setAllpaintings?: Function; fetchPainting?: Function };
+    filters?: Filter[];
     painting?: Painting;
     paintings?: Painting[];
 };

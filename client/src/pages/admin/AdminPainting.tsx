@@ -5,8 +5,13 @@ import {
     Painter,
     Painting,
     PaintingFilter,
+    Props,
 } from '../../../../types/types';
-import { getPaintingById, addFilterToPainting } from '../../utility/functions';
+import {
+    getPaintingById,
+    addFilterToPainting,
+    addFilter,
+} from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';
 import { selectToken } from '../../store';
 import { Button } from '../../components/Button';
@@ -17,20 +22,19 @@ export const AdminPainting = () => {
     const [painting, setPainting] = useState<Painting | null>(null);
     const [painters, setPainters] = useState<Painter[] | null>(null);
     const [filters, setFilters] = useState<Filter[] | null>(null);
-    const [newFilter, setNewFilter] = useState<number | null>(null);
 
-    useEffect(() => {
+    const fetchPainting = async () => {
         if (!token || !id) return;
-        const fetchAllPaintings = async () => {
-            const data = await getPaintingById(token, +id);
-            if (!data || !data.painting) return;
-            setPainting(data.painting);
-            if (!data.painters) return;
-            setPainters(data.painters);
-            if (!data.filters) return;
-            setFilters(data.filters);
-        };
-        fetchAllPaintings();
+        const data = await getPaintingById(token, +id);
+        if (!data || !data.painting) return;
+        setPainting(data.painting);
+        if (!data.painters) return;
+        setPainters(data.painters);
+        if (!data.filters) return;
+        setFilters(data.filters);
+    };
+    useEffect(() => {
+        fetchPainting();
     }, []);
     if (!painting) return <>Geen schilderij gevonden met dit ID!</>;
 
@@ -44,50 +48,6 @@ export const AdminPainting = () => {
             );
         });
         return options;
-    };
-
-    const FilterOptions = () => {
-        console.log(painting);
-        if (!filters || !painting.paintingfilters) return;
-
-        const filtersOnPainting = painting.paintingfilters.map(
-            (i: PaintingFilter) => {
-                return i.filter.name;
-            },
-        );
-        const newOptions = filters.filter((i: Filter) => {
-            if (filtersOnPainting.length === 0) return true;
-            return !filtersOnPainting.includes(i.name);
-        });
-        const currentOptions = filtersOnPainting.map((i: string) => {
-            return <>{i}</>;
-        });
-        const options = newOptions.map((i: Filter) => {
-            return (
-                <option key={i.id} value={i.id}>
-                    {i.name}
-                </option>
-            );
-        });
-
-        return (
-            <div className="flex-col inline-flex justify-center">
-                {' '}
-                <h1>Huidige filters</h1>
-                {currentOptions}
-                <h1>Voeg filter toe</h1>
-                <select onChange={(e) => setNewFilter(+e.target.value)}>
-                    {options}
-                </select>
-                <Button
-                    text="Toevoegen"
-                    onClickEvent={() => {
-                        if (!token || !painting.id || !newFilter) return;
-                        addFilterToPainting(token, painting.id, newFilter);
-                    }}
-                />
-            </div>
-        );
     };
 
     return (
@@ -188,9 +148,101 @@ export const AdminPainting = () => {
             </div>
             <Button text="Opslaan" onClickEvent={() => console.log(painting)} />
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                {FilterOptions()}
+                {filters ? (
+                    <FilterOptions
+                        filters={filters}
+                        painting={painting}
+                        functions={{ fetchPainting }}
+                    />
+                ) : (
+                    <></>
+                )}
             </div>
             <h1>Afbeeldingen</h1>
+        </div>
+    );
+};
+
+const FilterOptions = (p: Props) => {
+    const token = useAppSelector(selectToken);
+    const [newFilters, setNewFilters] = useState<Filter[] | null>(null);
+    const [filtersOnPainting, setFiltersOnPainting] = useState<string[] | null>(
+        null,
+    );
+    const { filters, painting, functions } = p;
+    useEffect(() => {
+        if (!painting || !filters || !painting.paintingfilters) return;
+        const currentOptions = painting.paintingfilters.map(
+            (i: PaintingFilter) => {
+                return i.filter.name;
+            },
+        );
+        const newOptions = filters
+            .filter((i: Filter) => {
+                if (currentOptions.length === 0) return true;
+                return !currentOptions.includes(i.name);
+            })
+            .map((i: Filter) => {
+                return { ...i, status: false };
+            });
+        setNewFilters(newOptions);
+        setFiltersOnPainting(currentOptions);
+    }, []);
+    console.log(painting);
+    if (
+        !painting ||
+        !filters ||
+        !painting.paintingfilters ||
+        !filtersOnPainting ||
+        !newFilters
+    )
+        return <></>;
+
+    const currentOptions = filtersOnPainting.map((i: string) => {
+        return <div key={i}>{i}</div>;
+    });
+    const handleOnChange = (id: number) => {
+        const modifiedFilters = newFilters.map((i: Filter) => {
+            if (i.id === id) return { ...i, status: !i.status };
+            return i;
+        });
+        setNewFilters(modifiedFilters);
+    };
+    const options = newFilters.map((i: Filter) => {
+        return (
+            <>
+                <input
+                    type="checkbox"
+                    defaultChecked={i.status}
+                    onChange={() => handleOnChange(i.id)}
+                />
+                {i.name}
+            </>
+        );
+    });
+
+    const addFilterAndFetch = async () => {
+        if (
+            !token ||
+            !painting.id ||
+            !newFilters ||
+            !functions ||
+            !functions.fetchPainting
+        )
+            return;
+        await addFilterToPainting(token, painting.id, newFilters);
+        await functions.fetchPainting();
+    };
+    return (
+        <div className="flex-col inline-flex justify-center">
+            {' '}
+            <div className="flex-col inline-flex justify-center">
+                <h1>Huidige filters</h1>
+                {currentOptions}
+            </div>
+            <h1>Voeg filter toe</h1>
+            {options}
+            <Button text="Toevoegen" onClickEvent={() => addFilterAndFetch()} />
         </div>
     );
 };

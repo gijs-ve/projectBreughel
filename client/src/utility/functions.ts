@@ -89,13 +89,13 @@ export const addFilter = async (token: string, filter: string) => {
 export const addFilterToPainting = async (
     token: string,
     paintingId: number,
-    filterId: number,
+    filters: Filter[],
 ) => {
     try {
         const { data, status } = await axios.post<ServerData>(
             `${apiUrl}/admin/postFilterPainting`,
             {
-                data: { paintingId, filterId },
+                data: { paintingId, filters },
             },
             { headers: { Authorization: `Bearer ${token}` } },
         );
