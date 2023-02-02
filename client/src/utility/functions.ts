@@ -36,6 +36,14 @@ export const getFilters = async () => {
     } catch (error) {}
 };
 
+export const getPaintings = async (token: string) => {
+    try {
+        const { data } = await axios.get<ServerData>(`${apiUrl}/getPaintings`);
+        if (!data) return;
+        return data;
+    } catch (error) {}
+};
+
 export const getAllPaintings = async (token: string) => {
     try {
         const { data } = await axios.get<ServerData>(
