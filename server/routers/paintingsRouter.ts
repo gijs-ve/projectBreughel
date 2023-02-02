@@ -4,7 +4,7 @@ import { admin as adminMiddleware } from '../middleware/admin';
 import { messages } from '../utility/messages';
 const Filters = require('../models/').filters;
 const Paintings = require('../models').paintings;
-
+const Favorites = require('../models').favorites;
 const router = new Router();
 
 router.get('/getFilters', async (req: Request, res: Response, next) => {
@@ -33,6 +33,21 @@ router.get('/getPaintings', async (req: Request, res: Response, next) => {
             message: 'All schilderijen opgehaald',
             paintings: paintings,
             filters: filters,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send({ message: messages.serverError });
+    }
+});
+
+router.get('/getFavorites', async (req: Request, res: Response, next) => {
+    try {
+        const favorites = await Favorites.findAll({
+            include: [{ model: Paintings }],
+        });
+        return res.status(200).send({
+            message: 'All schilderijen opgehaald',
+            favorites: favorites,
         });
     } catch (error) {
         console.log(error);

@@ -88,6 +88,7 @@ type PaintingFilter = {
 };
 export type Data = {
     user?: User;
+    favorites?: number[];
     filterId?: number;
     paintingfilters?: PaintingFilter[];
     filters?: Filter[];
