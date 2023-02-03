@@ -166,10 +166,17 @@ router.post(
             });
             if (!foundFavorite) {
                 const newFavorite = await Favorites.create({ paintingId });
+                return res.status(200).send({
+                    message: 'Schilderij verschijnt nu op voorpagina!',
+                    favorite: newFavorite,
+                });
             }
-            return res.status(200).send({
-                message: 'Succesfully updated painting',
-            });
+            if (foundFavorite) {
+                await foundFavorite.destroy();
+                return res
+                    .status(200)
+                    .send({ message: 'Schilderij niet langer op voorpagina!' });
+            }
         } catch (error) {
             console.log(error);
             return res.status(400).send({ message: messages.serverError });
