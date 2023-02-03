@@ -13,7 +13,6 @@ const Favorites = require('../models/').favorites;
 const router = new Router();
 
 //---Painting related---//
-
 router.get(
     '/getPaintingById/:id',
     [authMiddleware, adminMiddleware],
@@ -142,9 +141,11 @@ router.get(
     async (req: Request, res: Response, next) => {
         try {
             const allPaintings = await Paintings.findAll();
+            const allFavorites = await Favorites.findAll();
             return res.status(200).send({
                 message: 'Succesfully sent all paintings to admin',
                 paintings: allPaintings,
+                favorites: allFavorites,
             });
         } catch (error) {
             console.log(error);
