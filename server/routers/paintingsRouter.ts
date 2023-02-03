@@ -2,9 +2,11 @@ import { Router, Request, Response } from 'express';
 import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
 import { messages } from '../utility/messages';
+const Painters = require('../models/').painters;
+const Paintings = require('../models/').paintings;
+const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
-const Paintings = require('../models').paintings;
-const Favorites = require('../models').favorites;
+const Favorites = require('../models/').favorites;
 const router = new Router();
 
 router.get('/getFilters', async (req: Request, res: Response, next) => {
@@ -39,6 +41,37 @@ router.get('/getPaintings', async (req: Request, res: Response, next) => {
         return res.status(400).send({ message: messages.serverError });
     }
 });
+
+router.get(
+    '/getPaintingById/:id',
+    async (req: Request, res: Response, next) => {
+        try {
+            const { id } = req.params;
+            const foundPainting = await Paintings.findOne({
+                where: { id, isApproved: true },
+                attributes: [
+                    'id',
+                    'name',
+                    'width',
+                    'height',
+                    'price',
+                    'isSold',
+                ],
+                include: [
+                    { model: Painters, attributes: ['name', 'id'] },
+                    { model: PaintingFilters, include: { model: Filters } },
+                ],
+            });
+            return res.status(200).send({
+                message: `Succesfully found painting with id ${id}`,
+                painting: foundPainting,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
 
 router.get('/getFavorites', async (req: Request, res: Response, next) => {
     try {
