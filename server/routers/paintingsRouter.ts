@@ -30,7 +30,7 @@ router.get('/getPaintings', async (req: Request, res: Response, next) => {
         });
         const filters = await Filters.findAll();
         return res.status(200).send({
-            message: 'All schilderijen opgehaald',
+            message: 'All schilderijen en filters opgehaald',
             paintings: paintings,
             filters: filters,
         });

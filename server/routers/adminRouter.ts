@@ -8,6 +8,7 @@ const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
+const Favorites = require('../models/').favorites;
 
 const router = new Router();
 
@@ -144,6 +145,30 @@ router.get(
             return res.status(200).send({
                 message: 'Succesfully sent all paintings to admin',
                 paintings: allPaintings,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
+//---Favorites related---//
+router.post(
+    '/toggleFavorite',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { paintingId } = data;
+            const foundFavorite = await Favorites.findOne({
+                where: { id: paintingId },
+            });
+            if (!foundFavorite) {
+                const newFavorite = await Favorites.create({ paintingId });
+            }
+            return res.status(200).send({
+                message: 'Succesfully updated painting',
             });
         } catch (error) {
             console.log(error);
