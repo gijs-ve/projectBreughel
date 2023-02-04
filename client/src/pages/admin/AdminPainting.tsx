@@ -81,6 +81,7 @@ export const AdminPainting = () => {
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
                 <h1>Schilder</h1>
                 <select
+                    defaultValue={painting.painterId}
                     onChange={(e) =>
                         setPainting({ ...painting, painterId: +e.target.value })
                     }
@@ -139,7 +140,7 @@ export const AdminPainting = () => {
                     onChange={() =>
                         setPainting({
                             ...painting,
-                            isApproved: !painting.isPurchaseable,
+                            isPurchaseable: !painting.isPurchaseable,
                         })
                     }
                 />
@@ -152,7 +153,7 @@ export const AdminPainting = () => {
                     onChange={() =>
                         setPainting({
                             ...painting,
-                            isApproved: !painting.isSold,
+                            isSold: !painting.isSold,
                         })
                     }
                 />

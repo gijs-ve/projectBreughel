@@ -82,12 +82,15 @@ export const editPaintingById = async (
 ) => {
     try {
         console.log(painting);
-        // const { data } = await axios.patch<ServerData>(
-        //     `${apiUrl}/admin/editPaintingById/${id}`,
-        //     { headers: { Authorization: `Bearer ${token}` } },
-        // );
-        // if (!data) return;
-        // return data;
+        const { data } = await axios.patch<ServerData>(
+            `${apiUrl}/admin/editPaintingById/${id}`,
+            {
+                data: { painting },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+        if (!data) return;
+        return data;
     } catch (error) {}
 };
 

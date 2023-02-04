@@ -56,6 +56,8 @@ export type Props = {
     };
     id?: number | string;
     filters?: Filter[];
+    path?: string;
+    text?: string;
     painters?: Painter[];
     painting?: Painting;
     paintings?: Painting[];

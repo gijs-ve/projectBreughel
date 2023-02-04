@@ -13,8 +13,9 @@ export const PaintingRow = (p: Props) => {
     const { painting, functions } = p;
     const navigate = useNavigate();
     if (!painting) return <Default />;
-    const { id, name, painterId, isApproved } = painting;
-    if (!id || !name || !painterId) return <Default />;
+    console.log(painting);
+    const { id, name, painter, isApproved } = painting;
+    if (!id || !name || !painter) return <Default />;
     const handleApproval = async (id: number, token: string | null) => {
         await changeApproved(id, token);
         if (!functions || !functions.setAllpaintings || !token) return;
@@ -27,7 +28,7 @@ export const PaintingRow = (p: Props) => {
         <tr>
             <td className="pl-12">{id}</td>
             <td className="pl-12">{name}</td>
-            <td className="pl-12">{painterId}</td>
+            <td className="pl-12">{painter.name}</td>
             <td className="pl-8" onClick={() => navigate(`${id.toString()}`)}>
                 Wijzig
             </td>
