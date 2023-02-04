@@ -11,7 +11,7 @@ router.get('/getFilters', async (req: Request, res: Response, next) => {
     try {
         const filters = await Filters.findAll();
         if (!filters) {
-            return res.status(400).send({ message: 'No filters were found' });
+            return res.status(400).send({ message: 'Geen filters gevonden' });
         }
         return res.status(200).send({
             message: 'Succesfully received filters',
@@ -30,7 +30,7 @@ router.get('/getPaintings', async (req: Request, res: Response, next) => {
         });
         const filters = await Filters.findAll();
         return res.status(200).send({
-            message: 'All schilderijen opgehaald',
+            message: 'Alle schilderijen opgehaald',
             paintings: paintings,
             filters: filters,
         });
@@ -46,7 +46,7 @@ router.get('/getFavorites', async (req: Request, res: Response, next) => {
             include: [{ model: Paintings }],
         });
         return res.status(200).send({
-            message: 'All schilderijen opgehaald',
+            message: 'Alle schilderijen opgehaald',
             favorites: favorites,
         });
     } catch (error) {

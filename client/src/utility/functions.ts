@@ -44,6 +44,14 @@ export const getPaintings = async (token: string) => {
     } catch (error) {}
 };
 
+export const getFavorites = async (token: string) => {
+    try {
+        const { data } = await axios.get<ServerData>(`${apiUrl}/getFavorites`);
+        if (!data) return;
+        return data;
+    } catch (error) {}
+};
+
 export const getAllPaintings = async (token: string) => {
     try {
         const { data } = await axios.get<ServerData>(
