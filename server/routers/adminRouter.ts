@@ -8,11 +8,11 @@ const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
+const Favorites = require('../models/').favorites;
 
 const router = new Router();
 
 //---Painting related---//
-
 router.get(
     '/getPaintingById/:id',
     [authMiddleware, adminMiddleware],
@@ -141,10 +141,43 @@ router.get(
     async (req: Request, res: Response, next) => {
         try {
             const allPaintings = await Paintings.findAll();
+            const allFavorites = await Favorites.findAll();
             return res.status(200).send({
                 message: 'Succesfully sent all paintings to admin',
                 paintings: allPaintings,
+                favorites: allFavorites,
             });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
+//---Favorites related---//
+router.post(
+    '/toggleFavorite',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { paintingId } = data;
+            const foundFavorite = await Favorites.findOne({
+                where: { id: paintingId },
+            });
+            if (!foundFavorite) {
+                const newFavorite = await Favorites.create({ paintingId });
+                return res.status(200).send({
+                    message: 'Schilderij verschijnt nu op voorpagina!',
+                    favorite: newFavorite,
+                });
+            }
+            if (foundFavorite) {
+                await foundFavorite.destroy();
+                return res
+                    .status(200)
+                    .send({ message: 'Schilderij niet langer op voorpagina!' });
+            }
         } catch (error) {
             console.log(error);
             return res.status(400).send({ message: messages.serverError });
