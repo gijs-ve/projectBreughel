@@ -44,6 +44,28 @@ router.get(
         }
     },
 );
+router.patch(
+    '/editPaintingById/:id',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { id } = req.params;
+            const { painting } = req.body;
+            const foundPainting = await Paintings.findOne({
+                where: { id },
+            });
+            const newPainting = foundPainting.update({ painting });
+            return res.status(200).send({
+                message: `Succesfully found painting with id ${id}`,
+                painting: newPainting,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
 router.post(
     '/postPainting',
     [authMiddleware, adminMiddleware],
@@ -55,7 +77,7 @@ router.post(
                 name: painting.name,
                 painterId: 1,
                 width: painting.width,
-                height: painting.length,
+                height: painting.height,
                 price: painting.price,
                 isApproved: false,
                 isPurchaseable: false,

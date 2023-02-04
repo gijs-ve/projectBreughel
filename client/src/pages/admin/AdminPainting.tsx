@@ -166,6 +166,15 @@ export const AdminPainting = () => {
     );
 };
 
+const VisibleOnMain = (p: Props) => {
+    const token = useAppSelector(selectToken);
+    // const { painting, id, favorites } = p;
+    // const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    // const currentFavorites = favorites.map((i: number))
+    // useEffect(() => {
+    //     setIsFavorite(favorite
+};
+
 const FilterOptions = (p: Props) => {
     const token = useAppSelector(selectToken);
     const [newFilters, setNewFilters] = useState<Filter[] | null>(null);
