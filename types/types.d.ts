@@ -28,7 +28,7 @@ export type Painting = {
     filters?: Filter[];
     paintingfilters?: PaintingFilter[];
     isApproved?: boolean;
-    isPurchasable?: boolean;
+    isPurchaseable?: boolean;
     isSold?: boolean;
 };
 export type Paintings = Painting[];
@@ -56,6 +56,7 @@ export type Props = {
     };
     id?: number | string;
     filters?: Filter[];
+    painters?: Painter[];
     painting?: Painting;
     paintings?: Painting[];
 };

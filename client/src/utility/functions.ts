@@ -2,6 +2,7 @@ import axios from 'axios';
 import { apiUrl } from '../config/constants';
 import { Painting, Paintings, Filter } from '../../../types/types';
 import { ServerData } from './dataTypes';
+import { createImportSpecifier } from 'typescript';
 
 export const filterPaintings = (
     paintingsArray: Paintings,
@@ -74,14 +75,19 @@ export const getPaintingById = async (token: string, id: number) => {
     } catch (error) {}
 };
 
-export const editPaintingById = async (token: string, id: number) => {
+export const editPaintingById = async (
+    token: string,
+    id: number,
+    painting: Painting,
+) => {
     try {
-        const { data } = await axios.patch<ServerData>(
-            `${apiUrl}/admin/editPaintingById/${id}`,
-            { headers: { Authorization: `Bearer ${token}` } },
-        );
-        if (!data) return;
-        return data;
+        console.log(painting);
+        // const { data } = await axios.patch<ServerData>(
+        //     `${apiUrl}/admin/editPaintingById/${id}`,
+        //     { headers: { Authorization: `Bearer ${token}` } },
+        // );
+        // if (!data) return;
+        // return data;
     } catch (error) {}
 };
 

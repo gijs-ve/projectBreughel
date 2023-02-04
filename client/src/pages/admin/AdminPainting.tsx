@@ -11,6 +11,7 @@ import {
     getPaintingById,
     addFilterToPainting,
     addFilter,
+    editPaintingById,
 } from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';
 import { selectToken } from '../../store';
@@ -20,7 +21,7 @@ export const AdminPainting = () => {
     const { id } = useParams();
     const token = useAppSelector(selectToken);
     const [painting, setPainting] = useState<Painting | null>(null);
-    const [painters, setPainters] = useState<Painter[] | null>(null);
+    const [painters, setPainters] = useState<Painter[] | undefined>(undefined);
     const [filters, setFilters] = useState<Filter[] | null>(null);
 
     const fetchPainting = async (token: string, id: string) => {
@@ -40,16 +41,24 @@ export const AdminPainting = () => {
     }, []);
     if (!painting) return <>Geen schilderij gevonden met dit ID!</>;
 
-    const PainterOptions = () => {
-        if (!painters) return <option value={1}>{'Default'}</option>;
-        const options = painters.map((i: Painter) => {
-            return (
-                <option key={i.id} value={i.id}>
-                    {i.name}
-                </option>
-            );
-        });
-        return options;
+    const handleSaveClick = (
+        token: string | null,
+        id: string | undefined,
+        painting: Painting,
+    ) => {
+        if (!token || !id) return;
+        const adjustedPainting: Painting = {
+            name: painting.name,
+            id: painting.id,
+            isApproved: painting.isApproved,
+            isPurchaseable: painting.isPurchaseable,
+            isSold: painting.isSold,
+            height: painting.height,
+            width: painting.width,
+            price: painting.price,
+            painterId: painting.painterId,
+        };
+        editPaintingById(token, Number(id), adjustedPainting);
     };
 
     return (
@@ -76,7 +85,7 @@ export const AdminPainting = () => {
                         setPainting({ ...painting, painterId: +e.target.value })
                     }
                 >
-                    {PainterOptions()}
+                    <PainterOptions painters={painters} />
                 </select>
             </div>
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
@@ -126,11 +135,11 @@ export const AdminPainting = () => {
                 <h1 className="pr-12">Te koop?</h1>
                 <input
                     type="checkbox"
-                    defaultChecked={painting.isPurchasable}
+                    defaultChecked={painting.isPurchaseable}
                     onChange={() =>
                         setPainting({
                             ...painting,
-                            isApproved: !painting.isPurchasable,
+                            isApproved: !painting.isPurchaseable,
                         })
                     }
                 />
@@ -148,7 +157,10 @@ export const AdminPainting = () => {
                     }
                 />
             </div>
-            <Button text="Opslaan" onClickEvent={() => console.log(painting)} />
+            <Button
+                text="Opslaan"
+                onClickEvent={() => handleSaveClick(token, id, painting)}
+            />
             <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
                 {filters ? (
                     <FilterOptions
@@ -173,6 +185,19 @@ const VisibleOnMain = (p: Props) => {
     // const currentFavorites = favorites.map((i: number))
     // useEffect(() => {
     //     setIsFavorite(favorite
+};
+
+const PainterOptions = (p: Props) => {
+    const { painters } = p;
+    if (!painters) return <option value={1}>{'Default'}</option>;
+    const options = painters.map((i: Painter) => {
+        return (
+            <option key={i.id} value={i.id}>
+                {i.name}
+            </option>
+        );
+    });
+    return <>{options}</>;
 };
 
 const FilterOptions = (p: Props) => {
