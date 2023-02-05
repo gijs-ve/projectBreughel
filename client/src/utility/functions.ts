@@ -2,7 +2,6 @@ import axios from 'axios';
 import { apiUrl } from '../config/constants';
 import { Painting, Paintings, Filter } from '../../../types/types';
 import { ServerData } from './dataTypes';
-import { createImportSpecifier } from 'typescript';
 
 export const filterPaintings = (
     paintingsArray: Paintings,

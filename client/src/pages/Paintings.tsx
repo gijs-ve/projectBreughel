@@ -1,5 +1,5 @@
 const Paintings = () => {
-    return <div>PAINTINGS</div>;
+    return <div>Schilderijen</div>;
 };
 
 export { Paintings };
