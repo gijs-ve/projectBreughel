@@ -131,7 +131,7 @@ export const addFilterToPainting = async (
         const newFilters = filters.filter((i: Filter) => {
             return i.status;
         });
-        const { data, status } = await axios.post<ServerData>(
+        const { data } = await axios.post<ServerData>(
             `${apiUrl}/admin/postFilterPainting`,
             {
                 data: { paintingId, filters: newFilters },
@@ -147,7 +147,7 @@ export const addFilterToPainting = async (
 
 export const editFilter = async (token: string, filter: Filter) => {
     try {
-        const { data, status } = await axios.patch<ServerData>(
+        const { data } = await axios.patch<ServerData>(
             `${apiUrl}/admin/editFilter`,
             {
                 data: { newFilterName: filter.name, filterId: filter.id },

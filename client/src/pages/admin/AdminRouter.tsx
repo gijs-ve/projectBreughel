@@ -46,7 +46,6 @@ const NavigateTexts = () => {
 };
 
 export const AdminRouter = () => {
-    const navigate = useNavigate();
     const token = useAppSelector(selectToken);
     if (!token) {
         return <Login />;
