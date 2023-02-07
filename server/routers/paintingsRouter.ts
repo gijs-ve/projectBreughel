@@ -48,7 +48,8 @@ router.post(
     async (req: Request, res: Response, next) => {
         try {
             const { data } = req.body;
-            const { filters, offset } = data;
+            const { filters, page } = data;
+            const offset = Number(page) * 10 - 10;
             const paintings = await Paintings.findAll({
                 where: { isApproved: true },
                 offset,
@@ -64,7 +65,7 @@ router.post(
                 ],
             });
             return res.status(200).send({
-                message: 'Schilderijen op basis van filterse opgehaald',
+                message: 'Schilderijen op basis van filters zijn opgehaald',
                 paintings: paintings,
             });
         } catch (error) {}
