@@ -1,8 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import { PaintingList } from './ paintings/PaintingList';
-import {Pain}
+import { PaintingsList, PaintingDetails } from './ paintings';
 
-const Paintings = () => {
+export const Paintings = () => {
     return (
         <div>
             <Routes>
@@ -12,5 +11,3 @@ const Paintings = () => {
         </div>
     );
 };
-
-export { Paintings };
