@@ -8,7 +8,6 @@ export const getPageCount = () => async (dispatch: any) => {
         const { data } = await axios.get<ServerData>(
             `${apiUrl}/paintings/getPages`,
         );
-        console.log(data);
         if (!data) return;
         dispatch(setTotalPages(data.pageCount));
     } catch (error) {

@@ -13,7 +13,6 @@ export const PaintingRow = (p: Props) => {
     const { painting, functions } = p;
     const navigate = useNavigate();
     if (!painting) return <Default />;
-    console.log(painting);
     const { id, name, painter, isApproved } = painting;
     if (!id || !name || !painter) return <Default />;
     const handleApproval = async (id: number, token: string | null) => {
@@ -21,7 +20,6 @@ export const PaintingRow = (p: Props) => {
         if (!functions || !functions.setAllpaintings || !token) return;
         const data = await getAllPaintings(token);
         if (!data || !data.paintings) return;
-        console.log(data.paintings);
         functions.setAllpaintings(data.paintings);
     };
     return (

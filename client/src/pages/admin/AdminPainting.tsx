@@ -32,7 +32,6 @@ export const AdminPainting = () => {
         setPainters(data.painters);
         if (!data.filters) return;
         setFilters(data.filters);
-        console.log('fetchPainting');
     };
     useEffect(() => {
         if (!token || !id) return;
@@ -225,7 +224,6 @@ const FilterOptions = (p: Props) => {
         setNewFilters(newOptions);
         setFiltersOnPainting(currentOptions);
     }, [filters]);
-    console.log(painting);
     if (
         !painting ||
         !filters ||
@@ -272,7 +270,6 @@ const FilterOptions = (p: Props) => {
             painting.id,
             newFilters,
         );
-        console.log(newPainting);
         if (!newPainting) return;
         functions.fetchPainting(token, id);
     };

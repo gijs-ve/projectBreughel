@@ -80,7 +80,6 @@ export const editPaintingById = async (
     painting: Painting,
 ) => {
     try {
-        console.log(painting);
         const { data } = await axios.patch<ServerData>(
             `${apiUrl}/admin/editPaintingById/${id}`,
             {
@@ -95,7 +94,7 @@ export const editPaintingById = async (
 
 export const addPainting = async (token: string, painting: Painting) => {
     try {
-        const { data, status } = await axios.post<ServerData>(
+        await axios.post<ServerData>(
             `${apiUrl}/admin/postPainting`,
             {
                 data: { painting },
@@ -109,7 +108,7 @@ export const addPainting = async (token: string, painting: Painting) => {
 
 export const addFilter = async (token: string, filter: string) => {
     try {
-        const { data, status } = await axios.post<ServerData>(
+        await axios.post<ServerData>(
             `${apiUrl}/admin/postFilter`,
             {
                 data: { filter },
@@ -153,7 +152,6 @@ export const editFilter = async (token: string, filter: Filter) => {
             },
             { headers: { Authorization: `Bearer ${token}` } },
         );
-        console.log(data);
     } catch (error) {}
 };
 
