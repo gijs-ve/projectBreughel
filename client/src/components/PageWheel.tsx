@@ -1,4 +1,3 @@
-import { Props } from '../../../types/types';
 import { useAppDispatch } from '../utility/hooks';
 import { increasePage, decreasePage } from '../store';
 export const PageWheel = (p: { currentPage: number; totalPages: number }) => {

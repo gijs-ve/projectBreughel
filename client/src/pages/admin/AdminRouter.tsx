@@ -40,7 +40,7 @@ const NavigateTexts = () => {
         },
     ];
     const Texts = navigateTexts.map((i: { path: string; text: string }) => {
-        return <NavigateField path={i.path} text={i.text} />;
+        return <NavigateField key={i.path} path={i.path} text={i.text} />;
     });
     return <>{Texts}</>;
 };
