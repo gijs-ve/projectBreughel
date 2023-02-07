@@ -9,7 +9,7 @@ export const PaintingFrame = (p: { painting?: Painting }) => {
         <tr onClick={() => navigate(`${painting.id?.toString()}`)}>
             <td className="pl-12">{painting.name}</td>
             <td className="pl-12">{painting.painter?.name}</td>
-            <td className="pl-12">{painting.price}</td>
+            <td className="pl-12">{`€${painting.price}`}</td>
         </tr>
     );
 };
