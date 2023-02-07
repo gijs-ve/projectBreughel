@@ -29,6 +29,14 @@ export const paintingSlice = createSlice({
             });
             state.enabledFilters = newFilters;
         },
+        increasePage: (state) => {
+            if (!state.pages || !state.pages.currentPage) return;
+            state.pages.currentPage = state.pages.currentPage + 1;
+        },
+        decreasePage: (state) => {
+            if (!state.pages || !state.pages.currentPage) return;
+            state.pages.currentPage = state.pages.currentPage - 1;
+        },
         setPage: (state, action) => {
             if (!state.pages) return;
             state.pages.currentPage = action.payload;
@@ -47,6 +55,8 @@ export const {
     removeFilter,
     setPage,
     setTotalPages,
+    increasePage,
+    decreasePage,
 } = paintingSlice.actions;
 
 export default paintingSlice.reducer;
