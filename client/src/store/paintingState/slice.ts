@@ -4,7 +4,7 @@ import { PaintingState } from '../../../../types/types';
 const initialState: PaintingState = {
     paintings: null,
     enabledFilters: null,
-    pages: { currentPage: null, totalPages: null },
+    pages: { currentPage: 1, totalPages: null },
 };
 
 export const paintingSlice = createSlice({

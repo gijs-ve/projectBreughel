@@ -48,6 +48,8 @@ export type AdminProps = {
 };
 
 export type Props = {
+    currentPage?: number;
+    totalPages?: number;
     token?: string;
     functions?: {
         setAllpaintings?: Function;
@@ -70,8 +72,8 @@ export type UserState = {
 };
 
 type PageState = {
-    currentPage?: number | null;
-    totalPages: number | null;
+    currentPage?: number;
+    totalPages?: number | null;
 };
 
 export type PaintingState = {
