@@ -52,7 +52,7 @@ const pages: Page[] = [
     {
         component: Admin,
         icon: 'none',
-        navText: 'Admin Paneel',
+        navText: 'Admin',
         inNavbar: false,
         path: '/boekelo-zoo',
     },

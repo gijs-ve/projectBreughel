@@ -71,6 +71,7 @@ export type UserState = {
 
 export type PaintingState = {
     paintings?: Painting[] | null;
+    enabledFilters?: string[] | [] | null;
 };
 
 export type RawState = {

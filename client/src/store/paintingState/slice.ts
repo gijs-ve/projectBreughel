@@ -3,6 +3,7 @@ import { PaintingState } from '../../../../types/types';
 
 const initialState: PaintingState = {
     paintings: null,
+    enabledFilters: null,
 };
 
 export const paintingSlice = createSlice({
