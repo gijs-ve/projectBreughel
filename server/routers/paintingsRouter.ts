@@ -63,7 +63,7 @@ router.get(
                 ],
             });
             return res.status(200).send({
-                message: `Succesfully found painting with id ${id}`,
+                message: `Schilderij gevonden met het volgende id ${id}`,
                 painting: foundPainting,
             });
         } catch (error) {
