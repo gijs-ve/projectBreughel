@@ -9,6 +9,24 @@ const Favorites = require('../models/').favorites;
 const { Op } = require('sequelize');
 const router = new Router();
 
+const entriesPerPage = 10;
+
+router.get('/getPages', async (req: Request, res: Response, next) => {
+    try {
+        const paintingsCount = await Paintings.count({
+            where: { isApproved: true },
+        });
+        const pageCount = Math.ceil(paintingsCount / entriesPerPage);
+        return res.status(200).send({
+            message: 'PageCount opgehaald',
+            pageCount,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send({ message: messages.serverError });
+    }
+});
+
 router.get('/getFilters', async (req: Request, res: Response, next) => {
     try {
         const filters = await Filters.findAll();
@@ -28,7 +46,7 @@ router.get('/getFilters', async (req: Request, res: Response, next) => {
 router.get('/getPaintings/:page', async (req: Request, res: Response, next) => {
     try {
         const { page } = req.params;
-        const offset = Number(page) * 10 - 10;
+        const offset = Number(page) * entriesPerPage - entriesPerPage;
         const paintings = await Paintings.findAll({
             where: { isApproved: true },
             offset,
@@ -49,7 +67,9 @@ router.post(
         try {
             const { data } = req.body;
             const { filters, page } = data;
-            const offset = Number(page) * 10 - 10;
+            const offset = Number(page) * entriesPerPage - entriesPerPage;
+
+            //Check paintings + filter combination
             const paintings = await Paintings.findAll({
                 where: { isApproved: true },
                 offset,

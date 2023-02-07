@@ -69,9 +69,15 @@ export type UserState = {
     profile?: User | null;
 };
 
+type PageState = {
+    currentPage?: number | null;
+    totalPages: number | null;
+};
+
 export type PaintingState = {
     paintings?: Painting[] | null;
     enabledFilters?: string[] | [] | null;
+    pages?: PageState;
 };
 
 export type RawState = {
@@ -96,6 +102,7 @@ export type Data = {
     filterId?: number;
     paintingfilters?: PaintingFilter[];
     filters?: Filter[];
+    pageCount?: number;
     painting?: Painting;
     paintings?: Painting[];
     painters?: Painter[];

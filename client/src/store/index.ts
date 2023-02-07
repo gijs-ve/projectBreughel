@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import userReducer from './userState/slice';
+import paintingReducer from './paintingState/slice';
 
 const store = configureStore({
     reducer: {
         userState: userReducer,
+        paintingState: paintingReducer,
     },
 });
 
