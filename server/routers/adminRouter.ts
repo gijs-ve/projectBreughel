@@ -44,6 +44,38 @@ router.get(
         }
     },
 );
+router.patch(
+    '/editPaintingById/:id',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { id } = req.params;
+            const { painting } = req.body.data;
+            const foundPainting = await Paintings.findOne({
+                where: { id },
+            });
+            console.log(painting);
+            const newPainting = await foundPainting.update({
+                name: painting.name,
+                painterId: painting.painterId,
+                width: painting.width,
+                height: painting.height,
+                price: painting.price,
+                isApproved: painting.isApproved,
+                isPurchaseable: painting.isPurchaseable,
+                isSold: painting.isSold,
+            });
+            return res.status(200).send({
+                message: `Succesfully found painting with id ${id}`,
+                painting: newPainting,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
 router.post(
     '/postPainting',
     [authMiddleware, adminMiddleware],
@@ -55,7 +87,7 @@ router.post(
                 name: painting.name,
                 painterId: 1,
                 width: painting.width,
-                height: painting.length,
+                height: painting.height,
                 price: painting.price,
                 isApproved: false,
                 isPurchaseable: false,
@@ -140,7 +172,12 @@ router.get(
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
-            const allPaintings = await Paintings.findAll();
+            const allPaintings = await Paintings.findAll({
+                include: [
+                    { model: Painters, attributes: ['name', 'id'] },
+                    { model: PaintingFilters, include: { model: Filters } },
+                ],
+            });
             const allFavorites = await Favorites.findAll();
             return res.status(200).send({
                 message: 'Succesfully sent all paintings to admin',

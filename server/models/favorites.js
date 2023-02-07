@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         {},
         {
             sequelize,
-            modelName: 'favories',
+            modelName: 'favorites',
         },
     );
     return favorites;

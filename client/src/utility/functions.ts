@@ -44,6 +44,14 @@ export const getPaintings = async (token: string) => {
     } catch (error) {}
 };
 
+export const getFavorites = async (token: string) => {
+    try {
+        const { data } = await axios.get<ServerData>(`${apiUrl}/getFavorites`);
+        if (!data) return;
+        return data;
+    } catch (error) {}
+};
+
 export const getAllPaintings = async (token: string) => {
     try {
         const { data } = await axios.get<ServerData>(
@@ -59,6 +67,25 @@ export const getPaintingById = async (token: string, id: number) => {
     try {
         const { data } = await axios.get<ServerData>(
             `${apiUrl}/admin/getPaintingById/${id}`,
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+        if (!data) return;
+        return data;
+    } catch (error) {}
+};
+
+export const editPaintingById = async (
+    token: string,
+    id: number,
+    painting: Painting,
+) => {
+    try {
+        console.log(painting);
+        const { data } = await axios.patch<ServerData>(
+            `${apiUrl}/admin/editPaintingById/${id}`,
+            {
+                data: { painting },
+            },
             { headers: { Authorization: `Bearer ${token}` } },
         );
         if (!data) return;
@@ -103,7 +130,7 @@ export const addFilterToPainting = async (
         const newFilters = filters.filter((i: Filter) => {
             return i.status;
         });
-        const { data, status } = await axios.post<ServerData>(
+        const { data } = await axios.post<ServerData>(
             `${apiUrl}/admin/postFilterPainting`,
             {
                 data: { paintingId, filters: newFilters },
@@ -119,7 +146,7 @@ export const addFilterToPainting = async (
 
 export const editFilter = async (token: string, filter: Filter) => {
     try {
-        const { data, status } = await axios.patch<ServerData>(
+        const { data } = await axios.patch<ServerData>(
             `${apiUrl}/admin/editFilter`,
             {
                 data: { newFilterName: filter.name, filterId: filter.id },

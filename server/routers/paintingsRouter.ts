@@ -1,6 +1,4 @@
 import { Router, Request, Response } from 'express';
-import { auth as authMiddleware } from '../middleware/auth';
-import { admin as adminMiddleware } from '../middleware/admin';
 import { messages } from '../utility/messages';
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
@@ -13,7 +11,7 @@ router.get('/getFilters', async (req: Request, res: Response, next) => {
     try {
         const filters = await Filters.findAll();
         if (!filters) {
-            return res.status(400).send({ message: 'No filters were found' });
+            return res.status(400).send({ message: 'Geen filters gevonden' });
         }
         return res.status(200).send({
             message: 'Succesfully received filters',
@@ -32,7 +30,7 @@ router.get('/getPaintings', async (req: Request, res: Response, next) => {
         });
         const filters = await Filters.findAll();
         return res.status(200).send({
-            message: 'All schilderijen en filters opgehaald',
+            message: 'Alle schilderijen opgehaald en filters opgehaald',
             paintings: paintings,
             filters: filters,
         });
@@ -79,7 +77,7 @@ router.get('/getFavorites', async (req: Request, res: Response, next) => {
             include: [{ model: Paintings }],
         });
         return res.status(200).send({
-            message: 'All schilderijen opgehaald',
+            message: 'Alle schilderijen opgehaald',
             favorites: favorites,
         });
     } catch (error) {
@@ -87,22 +85,5 @@ router.get('/getFavorites', async (req: Request, res: Response, next) => {
         return res.status(400).send({ message: messages.serverError });
     }
 });
-
-router.post(
-    '/postPainting',
-    [authMiddleware, adminMiddleware],
-    async (req: Request, res: Response, next) => {
-        try {
-            const { painting } = req.body;
-            if (!painting) return;
-            const newPainting = await Paintings.create({ painting });
-            return res
-                .status(200)
-                .send({ message: messages.serverError }, newPainting);
-        } catch (error) {
-            console.log(error);
-        }
-    },
-);
 
 module.exports = router;
