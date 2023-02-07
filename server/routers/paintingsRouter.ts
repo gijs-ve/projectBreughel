@@ -1,10 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { messages } from '../utility/messages';
+import { Filter } from '../../types/types';
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
 const Favorites = require('../models/').favorites;
+const { Op } = require('sequelize');
 const router = new Router();
 
 router.get('/getFilters', async (req: Request, res: Response, next) => {
@@ -23,22 +25,51 @@ router.get('/getFilters', async (req: Request, res: Response, next) => {
     }
 });
 
-router.get('/getPaintings', async (req: Request, res: Response, next) => {
+router.get('/getPaintings/:page', async (req: Request, res: Response, next) => {
     try {
+        const { page } = req.params;
+        const offset = Number(page) * 10 - 10;
         const paintings = await Paintings.findAll({
             where: { isApproved: true },
+            offset,
         });
-        const filters = await Filters.findAll();
         return res.status(200).send({
-            message: 'Alle schilderijen opgehaald en filters opgehaald',
+            message: 'Schilderijen en filters opgehaald',
             paintings: paintings,
-            filters: filters,
         });
     } catch (error) {
         console.log(error);
         return res.status(400).send({ message: messages.serverError });
     }
 });
+
+router.post(
+    '/getPaintings/filter',
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { filters, offset } = data;
+            const paintings = await Paintings.findAll({
+                where: { isApproved: true },
+                offset,
+                include: [
+                    { model: Painters, attributes: ['name', 'id'] },
+                    {
+                        model: PaintingFilters,
+                        include: {
+                            model: Filters,
+                            where: { id: { [Op.and]: filters } },
+                        },
+                    },
+                ],
+            });
+            return res.status(200).send({
+                message: 'Schilderijen op basis van filterse opgehaald',
+                paintings: paintings,
+            });
+        } catch (error) {}
+    },
+);
 
 router.get(
     '/getPaintingById/:id',

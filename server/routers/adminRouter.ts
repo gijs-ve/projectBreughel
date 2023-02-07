@@ -9,7 +9,6 @@ const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
 const Favorites = require('../models/').favorites;
-
 const router = new Router();
 
 //---Painting related---//
