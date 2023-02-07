@@ -5,3 +5,7 @@ export const selectCurrentPage = (state: RawState) => {
 export const selectTotalPages = (state: RawState) => {
     return state.paintingState?.pages?.totalPages;
 };
+
+export const selectPaintings = (state: RawState) => {
+    return state.paintingState?.paintings;
+};
