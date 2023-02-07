@@ -1,10 +1,10 @@
 import { useAppDispatch } from '../utility/hooks';
-import { increasePage, decreasePage } from '../store';
+import { increasePage, decreasePage, getPaintingsFromPage } from '../store';
+import { useEffect } from 'react';
 export const PageWheel = (p: { currentPage: number; totalPages: number }) => {
     const { currentPage, totalPages } = p;
     return (
         <>
-            {' '}
             <PreviousPage currentPage={currentPage} />
             <CurrentPage currentPage={currentPage} totalPages={totalPages} />
             <NextPage currentPage={currentPage} totalPages={totalPages} />
@@ -14,6 +14,10 @@ export const PageWheel = (p: { currentPage: number; totalPages: number }) => {
 
 const CurrentPage = (p: { currentPage: number; totalPages: number }) => {
     const { currentPage } = p;
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(getPaintingsFromPage(currentPage));
+    }, [currentPage]);
     return <div>{currentPage}</div>;
 };
 

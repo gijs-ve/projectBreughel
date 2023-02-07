@@ -49,7 +49,12 @@ router.get('/getPaintings/:page', async (req: Request, res: Response, next) => {
         const offset = Number(page) * entriesPerPage - entriesPerPage;
         const paintings = await Paintings.findAll({
             where: { isApproved: true },
+            limit: entriesPerPage,
             offset,
+            include: [
+                { model: Painters, attributes: ['name', 'id'] },
+                { model: PaintingFilters, include: { model: Filters } },
+            ],
         });
         return res.status(200).send({
             message: 'Schilderijen en filters opgehaald',

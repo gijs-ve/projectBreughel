@@ -1,6 +1,6 @@
 const Users = require('../models').users;
 import { toData } from './jwt';
-import { messages } from 'utility/messages';
+import { messages } from '../utility/messages';
 
 export async function auth(req, res, next) {
     const auth =

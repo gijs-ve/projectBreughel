@@ -35,9 +35,10 @@ const List = () => {
         <table className="mx-auto">
             <tbody>
                 <tr>
-                    <th className="pl-12">Naam</th>
+                    <th className="pl-12">Schilderij</th>
                     <th className="pl-12">Schilder</th>
                     <th className="pl-12">Prijs</th>
+                    <th className="pl-12">Tags</th>
                 </tr>
                 <Paintings paintings={paintings} />
             </tbody>
@@ -47,7 +48,7 @@ const List = () => {
 const Paintings = (p: { paintings: Painting[] }) => {
     const { paintings } = p;
     const allPaintings = paintings.map((i: Painting) => {
-        return <PaintingFrame painting={i} />;
+        return <PaintingFrame key={i.id} painting={i} />;
     });
     return <>{allPaintings}</>;
 };
