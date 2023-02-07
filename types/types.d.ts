@@ -91,7 +91,7 @@ type PaintingFilter = {
 };
 export type Data = {
     user?: User;
-    favorites?: number[];
+    favorites?: Painting[];
     filterId?: number;
     paintingfilters?: PaintingFilter[];
     filters?: Filter[];

@@ -10,7 +10,6 @@ import {
 import {
     getPaintingById,
     addFilterToPainting,
-    addFilter,
     editPaintingById,
 } from '../../utility/functions';
 import { useAppSelector } from '../../utility/hooks';

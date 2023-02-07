@@ -36,7 +36,7 @@ export const getFilters = async () => {
     } catch (error) {}
 };
 
-export const getPaintings = async (token: string) => {
+export const getPaintings = async () => {
     try {
         const { data } = await axios.get<ServerData>(`${apiUrl}/getPaintings`);
         if (!data) return;
@@ -44,7 +44,7 @@ export const getPaintings = async (token: string) => {
     } catch (error) {}
 };
 
-export const getFavorites = async (token: string) => {
+export const getFavorites = async () => {
     try {
         const { data } = await axios.get<ServerData>(`${apiUrl}/getFavorites`);
         if (!data) return;
