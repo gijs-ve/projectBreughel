@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { apiUrl } from '../../config/constants';
 import { ServerData } from '../../utility/dataTypes';
-import { setTotalPages, setPaintings } from './slice';
+import { setTotalPages, setPaintings, setFilters } from './slice';
 
-export const getPageCount = () => async (dispatch: any) => {
+export const getPagesAndFilters = () => async (dispatch: any) => {
     try {
         const { data } = await axios.get<ServerData>(
-            `${apiUrl}/paintings/getPages`,
+            `${apiUrl}/paintings/getPagesAndFilters`,
         );
         if (!data) return;
         dispatch(setTotalPages(data.pageCount));
+        dispatch(setFilters(data.filters));
     } catch (error) {
         console.log(error);
     }

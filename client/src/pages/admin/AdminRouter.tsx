@@ -38,6 +38,10 @@ const NavigateTexts = () => {
             path: './filters',
             text: 'Wijzig filters',
         },
+        {
+            path: './geld',
+            text: '$$$',
+        },
     ];
     const Texts = navigateTexts.map((i: { path: string; text: string }) => {
         return <NavigateField key={i.path} path={i.path} text={i.text} />;

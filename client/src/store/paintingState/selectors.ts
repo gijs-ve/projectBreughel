@@ -9,3 +9,7 @@ export const selectTotalPages = (state: RawState) => {
 export const selectPaintings = (state: RawState) => {
     return state.paintingState?.paintings;
 };
+
+export const selectFilters = (state: RawState) => {
+    return state.paintingState?.filters;
+};

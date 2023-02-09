@@ -4,6 +4,7 @@ import { PaintingState } from '../../../../types/types';
 const initialState: PaintingState = {
     paintings: null,
     enabledFilters: null,
+    filters: null,
     pages: { currentPage: 1, totalPages: null },
 };
 
@@ -16,6 +17,9 @@ export const paintingSlice = createSlice({
         },
         resetFilters: (state, action) => {
             state.enabledFilters = null;
+        },
+        setFilters: (state, action) => {
+            state.filters = action.payload;
         },
         addFilter: (state, action) => {
             if (!state.enabledFilters) {
@@ -51,6 +55,7 @@ export const paintingSlice = createSlice({
 export const {
     setPaintings,
     resetFilters,
+    setFilters,
     addFilter,
     removeFilter,
     setPage,

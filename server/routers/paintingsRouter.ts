@@ -11,15 +11,17 @@ const router = new Router();
 
 const entriesPerPage = 10;
 
-router.get('/getPages', async (req: Request, res: Response, next) => {
+router.get('/getPagesAndFilters', async (req: Request, res: Response, next) => {
     try {
         const paintingsCount = await Paintings.count({
             where: { isApproved: true },
         });
         const pageCount = Math.ceil(paintingsCount / entriesPerPage);
+        const filters = await Filters.findAll({ attributes: ['name'] });
         return res.status(200).send({
-            message: 'PageCount opgehaald',
+            message: 'PageCount en filters opgehaald',
             pageCount,
+            filters,
         });
     } catch (error) {
         console.log(error);

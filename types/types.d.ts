@@ -76,8 +76,13 @@ type PageState = {
     totalPages?: number | null;
 };
 
+type FilterState = {
+    name: string;
+};
+
 export type PaintingState = {
     paintings?: Painting[] | null;
+    filters?: FilterState[] | null;
     enabledFilters?: string[] | [] | null;
     pages?: PageState;
 };

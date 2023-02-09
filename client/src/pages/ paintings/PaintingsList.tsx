@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { Painting } from '../../../../types/types';
 import { PageWheel } from '../../components/PageWheel';
 import {
-    getPageCount,
+    getPagesAndFilters,
     selectCurrentPage,
     selectTotalPages,
     selectPaintings,
+    selectFilters,
 } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../utility/hooks';
 import { PaintingFrame } from './PaintingFrame';
@@ -14,16 +15,18 @@ export const PaintingsList = () => {
     const dispatch = useAppDispatch();
     const totalPages = useAppSelector(selectTotalPages);
     const currentPage = useAppSelector(selectCurrentPage);
+
     useEffect(() => {
-        dispatch(getPageCount());
+        dispatch(getPagesAndFilters());
     }, []);
     return (
         <>
+            <Filters />
+            <List />
             <PageWheel
                 currentPage={currentPage ? currentPage : 1}
                 totalPages={totalPages ? totalPages : 10}
             />
-            <List />
         </>
     );
 };
@@ -51,4 +54,12 @@ const Paintings = (p: { paintings: Painting[] }) => {
         return <PaintingFrame key={i.id} painting={i} />;
     });
     return <>{allPaintings}</>;
+};
+
+const Filters = () => {
+    const filters = useAppSelector(selectFilters);
+    const filterNames = filters?.map((i: { name: string }) => {
+        return <>{i.name}</>;
+    });
+    return <>{filterNames}</>;
 };
