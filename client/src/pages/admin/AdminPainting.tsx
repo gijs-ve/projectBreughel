@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     Filter,
@@ -172,7 +172,9 @@ export const AdminPainting = () => {
                     <></>
                 )}
             </div>
-            <h1>Afbeeldingen</h1>
+            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
+                <ImageSection />
+            </div>
         </div>
     );
 };
@@ -284,5 +286,24 @@ const FilterOptions = (p: Props) => {
             {options}
             <Button text="Toevoegen" onClickEvent={() => addFilterAndFetch()} />
         </div>
+    );
+};
+
+const ImageSection = () => {
+    const [file, setFile] = useState<any>(null);
+    const handleFileInput = (e: any) => {
+        setFile(e.target.files[0]);
+    };
+    return (
+        <>
+            <h1>Afbeeldingen</h1>
+            <div className="file-uploader">
+                <input type="file" onChange={(e) => handleFileInput(e)} />
+            </div>
+            <Button
+                text="Voeg afbeelding toe"
+                onClickEvent={() => console.log(file)}
+            />
+        </>
     );
 };

@@ -9,6 +9,7 @@ const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
 const Favorites = require('../models/').favorites;
+const Images = require('../models/').paintingimages;
 const router = new Router();
 
 //---Painting related---//
@@ -23,6 +24,7 @@ router.get(
                 include: [
                     { model: Painters, attributes: ['name', 'id'] },
                     { model: PaintingFilters, include: { model: Filters } },
+                    { model: Images, attributes: ['id', 'url'] },
                 ],
             });
             const painters = await Painters.findAll({

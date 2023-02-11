@@ -86,7 +86,7 @@ const Filters = () => {
         (i: { name: string; status: boolean }) => {
             return (
                 <div
-                    className="pt-4 border border-x-8 border-sky-500"
+                    className="pt-4 border border-y-4 border-sky-500"
                     onClick={() => handleClick(i.name)}
                     key={i.name}
                 >
@@ -96,5 +96,5 @@ const Filters = () => {
             );
         },
     );
-    return <div className="">{filterNames}</div>;
+    return <div className="container flex mx-auto">{filterNames}</div>;
 };
