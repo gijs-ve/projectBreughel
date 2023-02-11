@@ -6,6 +6,7 @@ const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
 const Filters = require('../models/').filters;
 const Favorites = require('../models/').favorites;
+const Images = require('../models').paintingimages;
 const { Op } = require('sequelize');
 const router = new Router();
 
@@ -77,10 +78,12 @@ router.post(
             const offset = Number(page) * entriesPerPage - entriesPerPage;
 
             //Check paintings + filter combination
-            const paintings = await Paintings.findAll({
+
+            const { count, rows } = await Paintings.findAndCountAll({
                 where: { isApproved: true },
                 offset,
                 include: [
+                    { model: Images, attributes: ['url', 'id'] },
                     { model: Painters, attributes: ['name', 'id'] },
                     {
                         model: PaintingFilters,
@@ -91,8 +94,12 @@ router.post(
                     },
                 ],
             });
+
+            const pageCount = Math.ceil(count / entriesPerPage);
+            const paintings = rows;
             return res.status(200).send({
                 message: 'Schilderijen op basis van filters zijn opgehaald',
+                pageCount,
                 paintings: paintings,
             });
         } catch (error) {}
