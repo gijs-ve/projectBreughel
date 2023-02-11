@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Painting } from '../../../../types/types';
 import { PageWheel } from '../../components/PageWheel';
 import {
@@ -58,8 +58,43 @@ const Paintings = (p: { paintings: Painting[] }) => {
 
 const Filters = () => {
     const filters = useAppSelector(selectFilters);
-    const filterNames = filters?.map((i: { name: string }) => {
-        return <>{i.name}</>;
-    });
-    return <>{filterNames}</>;
+    const [filterState, setFilterState] = useState<
+        | {
+              name: string;
+              status: boolean;
+          }[]
+        | null
+    >(null);
+    useEffect(() => {
+        const initialFilterState = filters?.map((i: { name: string }) => {
+            return { name: i.name, status: false };
+        });
+        if (!initialFilterState) return;
+        setFilterState(initialFilterState);
+    }, []);
+    const handleClick = (name: string) => {
+        const newFilterState = filterState?.map(
+            (i: { name: string; status: boolean }) => {
+                if (i.name === name) return { ...i, status: !i.status };
+                return i;
+            },
+        );
+        if (!newFilterState) return;
+        setFilterState(newFilterState);
+    };
+    const filterNames = filterState?.map(
+        (i: { name: string; status: boolean }) => {
+            return (
+                <div
+                    className="pt-4 border border-x-8 border-sky-500"
+                    onClick={() => handleClick(i.name)}
+                    key={i.name}
+                >
+                    {i.name + ' '}
+                    {i.status ? 'ACTIEF' : 'INACTIEF'}
+                </div>
+            );
+        },
+    );
+    return <div className="">{filterNames}</div>;
 };
