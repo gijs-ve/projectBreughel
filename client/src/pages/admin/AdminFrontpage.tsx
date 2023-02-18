@@ -25,7 +25,7 @@ export const AdminFrontpage = () => {
 const FavoriteField = (p: Props) => {
     const navigate = useNavigate();
     const { paintings } = p;
-    if (!paintings) return <></>;
+    if (!paintings) return <>Geen schilderijen gevonden</>;
     const MappedPaintings = paintings.map((i: Painting) => {
         if (!i.id) return <></>;
         return (
