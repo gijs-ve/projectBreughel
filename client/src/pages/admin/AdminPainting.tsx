@@ -62,121 +62,163 @@ export const AdminPainting = () => {
     };
 
     return (
-        <div className="flex-col inline-flex justify-center">
-            <h1>
-                {painting.name} {`(ID ${painting.id}) `}
-                door{' '}
-                {painting.painter ? painting.painter.name : painting.painterId}
-            </h1>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Naam</h1>
-                <input
-                    type="text"
-                    value={painting.name}
-                    onChange={(e) =>
-                        setPainting({ ...painting, name: e.target.value })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Schilder</h1>
-                <select
-                    defaultValue={painting.painterId}
-                    onChange={(e) =>
-                        setPainting({ ...painting, painterId: +e.target.value })
-                    }
-                >
-                    <PainterOptions painters={painters} />
-                </select>
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Lengte</h1>
-                <input
-                    type="number"
-                    value={painting.height}
-                    onChange={(e) =>
-                        setPainting({ ...painting, height: +e.target.value })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Breedte</h1>
-                <input
-                    type="number"
-                    value={painting.width}
-                    onChange={(e) =>
-                        setPainting({ ...painting, width: +e.target.value })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <h1>Prijs</h1>
-                <input
-                    type="number"
-                    value={painting.price}
-                    onChange={(e) =>
-                        setPainting({ ...painting, price: +e.target.value })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs pr-36">
-                <h1 className="pr-12">Zichtbaar?</h1>
-                <input
-                    type="checkbox"
-                    defaultChecked={painting.isApproved}
-                    onChange={() =>
-                        setPainting({
-                            ...painting,
-                            isApproved: !painting.isApproved,
-                        })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs pr-36">
-                <h1 className="pr-12">Te koop?</h1>
-                <input
-                    type="checkbox"
-                    defaultChecked={painting.isPurchaseable}
-                    onChange={() =>
-                        setPainting({
-                            ...painting,
-                            isPurchaseable: !painting.isPurchaseable,
-                        })
-                    }
-                />
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs pr-36">
-                <h1 className="pr-12">Verkocht?</h1>
-                <input
-                    type="checkbox"
-                    defaultChecked={painting.isSold}
-                    onChange={() =>
-                        setPainting({
-                            ...painting,
-                            isSold: !painting.isSold,
-                        })
-                    }
-                />
-            </div>
-            <Button
-                text="Opslaan"
-                onClickEvent={() => handleSaveClick(token, id, painting)}
-            />
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                {filters ? (
-                    <FilterOptions
-                        filters={filters}
-                        painting={painting}
-                        functions={{ fetchPainting }}
-                        id={id}
+        <div className="flex flex-inline px-96">
+            <table className="table-fixed">
+                <tr>
+                    {painting.name} {`(ID ${painting.id}) `}
+                    door{' '}
+                    {painting.painter
+                        ? painting.painter.name
+                        : painting.painterId}
+                </tr>
+                <tr className="">
+                    <td className="w-40">Naam</td>
+                    <td className="w-32">
+                        <input
+                            type="text"
+                            value={painting.name}
+                            onChange={(e) =>
+                                setPainting({
+                                    ...painting,
+                                    name: e.target.value,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr className="">
+                    <td>Schilder</td>
+                    <td>
+                        <select
+                            defaultValue={painting.painterId}
+                            onChange={(e) =>
+                                setPainting({
+                                    ...painting,
+                                    painterId: +e.target.value,
+                                })
+                            }
+                        >
+                            <PainterOptions painters={painters} />
+                        </select>
+                    </td>
+                </tr>
+
+                <tr className="">
+                    <td>Lengte</td>
+                    <td>
+                        <input
+                            type="number"
+                            value={painting.height}
+                            onChange={(e) =>
+                                setPainting({
+                                    ...painting,
+                                    height: +e.target.value,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr className="">
+                    <td>Breedte</td>
+                    <td>
+                        <input
+                            type="number"
+                            value={painting.width}
+                            onChange={(e) =>
+                                setPainting({
+                                    ...painting,
+                                    width: +e.target.value,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr className="">
+                    <td>Prijs</td>
+                    <td>
+                        <input
+                            type="number"
+                            value={painting.price}
+                            onChange={(e) =>
+                                setPainting({
+                                    ...painting,
+                                    price: +e.target.value,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr className="">
+                    <td>Zichtbaar?</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            defaultChecked={painting.isApproved}
+                            onChange={() =>
+                                setPainting({
+                                    ...painting,
+                                    isApproved: !painting.isApproved,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Te koop?</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            defaultChecked={painting.isPurchaseable}
+                            onChange={() =>
+                                setPainting({
+                                    ...painting,
+                                    isPurchaseable: !painting.isPurchaseable,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Verkocht?</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            defaultChecked={painting.isSold}
+                            onChange={() =>
+                                setPainting({
+                                    ...painting,
+                                    isSold: !painting.isSold,
+                                })
+                            }
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <Button
+                        text="Opslaan"
+                        onClickEvent={() =>
+                            handleSaveClick(token, id, painting)
+                        }
                     />
-                ) : (
-                    <></>
-                )}
-            </div>
-            <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
-                <ImageSection />
-            </div>
+                </tr>
+                <tr>
+                    <td>
+                        {filters ? (
+                            <FilterOptions
+                                filters={filters}
+                                painting={painting}
+                                functions={{ fetchPainting }}
+                                id={id}
+                            />
+                        ) : (
+                            <></>
+                        )}
+                    </td>
+                </tr>
+                <div className="flex-row inline-flex justify-center flex-nowrap h-max-xs space-x-5">
+                    <ImageSection />
+                </div>
+            </table>
         </div>
     );
 };
