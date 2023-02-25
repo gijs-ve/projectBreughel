@@ -88,7 +88,7 @@ router.post(
             const { painting } = data;
             const newPainting = await Paintings.create({
                 name: painting.name,
-                painterId: 1,
+                painterId: 15,
                 width: painting.width,
                 height: painting.height,
                 price: painting.price,
