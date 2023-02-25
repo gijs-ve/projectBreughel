@@ -1,14 +1,16 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+    AdminAddPainting,
+    AdminFilters,
+    AdminFrontpage,
+    AdminPainters,
+    AdminPaintings,
+    Login,
+} from './index';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
 import { Props } from '../../../../types/types';
 import { selectToken } from '../../store';
 import { useAppSelector } from '../../utility/hooks';
-import {
-    Login,
-    AdminAddPainting,
-    AdminFilters,
-    AdminPaintings,
-    AdminFrontpage,
-} from './index';
 
 const NavigateField = (p: Props) => {
     const { path, text } = p;
@@ -68,6 +70,7 @@ export const AdminRouter = () => {
                         element=<AdminAddPainting />
                     />
                     <Route path="/filters" element=<AdminFilters /> />
+                    <Route path="/painters" element=<AdminPainters /> />
                 </Routes>
             </div>
         </>

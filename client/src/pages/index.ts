@@ -1,9 +1,9 @@
-import { FC } from 'react';
 import { Admin } from './Admin';
-import { Home } from './Home';
-import { Paintings } from './Paintings';
-import { Offerte } from './Offerte';
 import { Contact } from './Contact';
+import { FC } from 'react';
+import { Home } from './Home';
+import { Offerte } from './Offerte';
+import { Paintings } from './Paintings';
 import { Winkelmand } from './Winkelmand';
 
 export type Page = {

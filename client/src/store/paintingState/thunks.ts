@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { apiUrl } from '../../config/constants';
+import { setFilters, setPaintings, setTotalPages } from './slice';
+
 import { ServerData } from '../../utility/dataTypes';
-import { setTotalPages, setPaintings, setFilters } from './slice';
+import { apiUrl } from '../../config/constants';
+import axios from 'axios';
 
 export const getPagesAndFilters = () => async (dispatch: any) => {
     try {

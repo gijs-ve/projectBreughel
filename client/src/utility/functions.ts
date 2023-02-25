@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { apiUrl } from '../config/constants';
-import { Painting, Paintings, Filter } from '../../../types/types';
+import { Filter, Painting, Paintings } from '../../../types/types';
+
 import { ServerData } from './dataTypes';
+import { apiUrl } from '../config/constants';
+import axios from 'axios';
 
 export const filterPaintings = (
     paintingsArray: Paintings,

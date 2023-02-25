@@ -1,9 +1,10 @@
+import { Request, Response, Router } from 'express';
+
 import { Filter } from '../../types/types';
-import { messages } from '../utility/messages';
-import { Router, Request, Response } from 'express';
-import { auth as authMiddleware } from '../middleware/auth';
 import { admin as adminMiddleware } from '../middleware/admin';
+import { auth as authMiddleware } from '../middleware/auth';
 import { capitaliseFirstLetter } from '../utility/functions';
+import { messages } from '../utility/messages';
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
@@ -185,6 +186,26 @@ router.get(
                 paintings: allPaintings,
                 favorites: allFavorites,
             });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
+//---Painter related---//
+
+router.post(
+    '/postPainter',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { data } = req.body;
+            const { name } = data;
+            const newPainter = await Painters.create({ name });
+            return res
+                .status(200)
+                .send({ message: 'Succesfully created new painter' });
         } catch (error) {
             console.log(error);
             return res.status(400).send({ message: messages.serverError });

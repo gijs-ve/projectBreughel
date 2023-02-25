@@ -3,3 +3,4 @@ export * from './AdminFrontpage';
 export * from './AdminPaintings';
 export * from './AdminAddPainting';
 export * from './Login';
+export * from './AdminPainters';

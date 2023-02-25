@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
 import { PaintingState } from '../../../../types/types';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PaintingState = {
     paintings: null,
