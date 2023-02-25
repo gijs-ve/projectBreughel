@@ -122,6 +122,34 @@ export const addPainter = async (token: string, name: string) => {
     }
 };
 
+export const getPainters = async (token: string) => {
+    try {
+        const response = await axios.post<ServerData>(
+            `${apiUrl}/admin/getPainters`,
+            {},
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const deletePainter = async (token: string, id: number) => {
+    try {
+        const response = await axios.post<ServerData>(
+            `${apiUrl}/admin/deletePainter`,
+            {
+                data: { id },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const addFilter = async (token: string, filter: string) => {
     try {
         await axios.post<ServerData>(

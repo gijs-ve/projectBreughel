@@ -215,18 +215,34 @@ router.post(
     },
 );
 
-router.get(
+router.post(
     '/getPainters',
     [authMiddleware, adminMiddleware],
     async (req: Request, res: Response, next) => {
         try {
             const allPainters = await Painters.findAll();
-            return res
-                .status(200)
-                .send({
-                    message: 'Succesfully created new painter',
-                    painters: allPainters,
-                });
+            return res.status(200).send({
+                message: 'Succesfully created new painter',
+                painters: allPainters,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
+router.post(
+    '/deletePainter',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const { id } = req.body.data;
+            const foundPainter = await Painters.findOne({ where: { id } });
+            await foundPainter.delete();
+            return res.status(200).send({
+                message: 'Succesfully deleted painter',
+            });
         } catch (error) {
             console.log(error);
             return res.status(400).send({ message: messages.serverError });
