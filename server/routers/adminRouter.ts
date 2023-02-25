@@ -5,6 +5,7 @@ import { admin as adminMiddleware } from '../middleware/admin';
 import { auth as authMiddleware } from '../middleware/auth';
 import { capitaliseFirstLetter } from '../utility/functions';
 import { messages } from '../utility/messages';
+
 const Painters = require('../models/').painters;
 const Paintings = require('../models/').paintings;
 const PaintingFilters = require('../models/').paintingfilters;
@@ -194,7 +195,6 @@ router.get(
 );
 
 //---Painter related---//
-
 router.post(
     '/postPainter',
     [authMiddleware, adminMiddleware],
@@ -202,7 +202,9 @@ router.post(
         try {
             const { data } = req.body;
             const { name } = data;
+            console.log('NAME', name);
             const newPainter = await Painters.create({ name });
+            console.log(newPainter);
             return res
                 .status(200)
                 .send({ message: 'Succesfully created new painter' });

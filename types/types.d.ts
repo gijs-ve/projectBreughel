@@ -82,6 +82,7 @@ type FilterState = {
 
 export type PaintingState = {
     paintings?: Painting[] | null;
+    painters?: string[] | null;
     filters?: FilterState[] | null;
     enabledFilters?: string[] | [] | null;
     pages?: PageState;

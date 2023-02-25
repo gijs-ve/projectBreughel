@@ -5,6 +5,7 @@ const initialState: PaintingState = {
     paintings: null,
     enabledFilters: null,
     filters: null,
+    painters: null,
     pages: { currentPage: 1, totalPages: null },
 };
 
@@ -12,6 +13,15 @@ export const paintingSlice = createSlice({
     name: 'paintings',
     initialState,
     reducers: {
+        setPainters: (state, action) => {
+            state.painters = action.payload;
+        },
+        addPainter: (state, action: { payload: string }) => {
+            if (!state.painters) {
+                state.painters = [action.payload];
+            }
+            state.painters = [...state.painters, action.payload];
+        },
         setPaintings: (state, action) => {
             state.paintings = action.payload;
         },
@@ -53,6 +63,8 @@ export const paintingSlice = createSlice({
 });
 
 export const {
+    setPainters,
+    addPainter,
     setPaintings,
     resetFilters,
     setFilters,

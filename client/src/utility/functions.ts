@@ -109,6 +109,7 @@ export const addPainting = async (token: string, painting: Painting) => {
 
 export const addPainter = async (token: string, name: string) => {
     try {
+        console.log(name);
         const response = await axios.post<ServerData>(
             `${apiUrl}/admin/postPainter`,
             {

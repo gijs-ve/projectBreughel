@@ -7,7 +7,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     painters.init(
-        {},
+        {
+            name: {
+                allowNull: false,
+                type: DataTypes.STRING,
+            },
+        },
         {
             sequelize,
             modelName: 'painters',
