@@ -107,6 +107,20 @@ export const addPainting = async (token: string, painting: Painting) => {
     }
 };
 
+export const addPainter = async (token: string, name: string) => {
+    try {
+        const response = await axios.post<ServerData>(
+            `${apiUrl}/admin/postPainter`,
+            {
+                data: { name },
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+        );
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const addFilter = async (token: string, filter: string) => {
     try {
         await axios.post<ServerData>(
