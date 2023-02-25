@@ -49,15 +49,17 @@ const PainterList = (p: { painters: Painter[] }) => {
     const { painters } = p;
     const mappedPainters = painters.map((i: Painter) => {
         return (
-            <>
-                <h1>{i.name}</h1>
+            <div className="flex flex-inline w-8" key={i.id}>
+                <div>{i.name}</div>
                 <RemoveButton id={i.id} />
-            </>
+            </div>
         );
     });
-    const RemoveButton = (p: { id: number }) => {
-        const { id } = p;
-        return <Button text="Verwijder schilder" onClickEvent={() => {}} />;
-    };
+
     return <>{mappedPainters}</>;
+};
+
+const RemoveButton = (p: { id: number }) => {
+    const { id } = p;
+    return <Button text="Verwijder schilder" onClickEvent={() => {}} />;
 };
