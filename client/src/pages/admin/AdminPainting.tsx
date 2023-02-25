@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import {
     Filter,
     Painter,
@@ -8,13 +6,17 @@ import {
     Props,
 } from '../../../../types/types';
 import {
-    getPaintingById,
     addFilterToPainting,
     editPaintingById,
+    getPaintingById,
 } from '../../utility/functions';
-import { useAppSelector } from '../../utility/hooks';
-import { selectToken } from '../../store';
+import { useEffect, useRef, useState } from 'react';
+
 import { Button } from '../../components/Button';
+import { Cloudinary } from './Cloudinary';
+import { selectToken } from '../../store';
+import { useAppSelector } from '../../utility/hooks';
+import { useParams } from 'react-router-dom';
 
 export const AdminPainting = () => {
     const { id } = useParams();
@@ -287,14 +289,15 @@ const ImageSection = () => {
     };
     return (
         <>
-            <h1>Afbeeldingen</h1>
+            <Cloudinary />
+            {/* <h1>Afbeeldingen</h1>
             <div className="file-uploader">
                 <input type="file" onChange={(e) => handleFileInput(e)} />
             </div>
             <Button
                 text="Voeg afbeelding toe"
                 onClickEvent={() => console.log(file)}
-            />
+            /> */}
         </>
     );
 };
