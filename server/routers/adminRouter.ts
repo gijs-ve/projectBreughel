@@ -215,6 +215,25 @@ router.post(
     },
 );
 
+router.get(
+    '/getPainters',
+    [authMiddleware, adminMiddleware],
+    async (req: Request, res: Response, next) => {
+        try {
+            const allPainters = await Painters.findAll();
+            return res
+                .status(200)
+                .send({
+                    message: 'Succesfully created new painter',
+                    painters: allPainters,
+                });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ message: messages.serverError });
+        }
+    },
+);
+
 //---Favorites related---//
 router.post(
     '/toggleFavorite',
