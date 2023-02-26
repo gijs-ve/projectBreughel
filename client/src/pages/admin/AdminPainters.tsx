@@ -1,9 +1,12 @@
-import { addPainter, getPainters } from '../../utility/functions';
+import {
+    addPainter,
+    deletePainter,
+    getPainters,
+} from '../../utility/functions';
 import { useEffect, useState } from 'react';
 
 import { Button } from '../../components/Button';
 import { Painter } from '../../../../types/types';
-import axios from 'axios';
 import { selectToken } from '../../store';
 import { useAppSelector } from '../../utility/hooks';
 
@@ -49,9 +52,11 @@ const PainterList = (p: { painters: Painter[] }) => {
     const { painters } = p;
     const mappedPainters = painters.map((i: Painter) => {
         return (
-            <div className="flex flex-inline w-8" key={i.id}>
-                <div>{i.name}</div>
-                <RemoveButton id={i.id} />
+            <div className="" key={i.id}>
+                <div className="py-8">
+                    {i.name}
+                    <RemoveButton id={i.id} />
+                </div>
             </div>
         );
     });
@@ -61,5 +66,17 @@ const PainterList = (p: { painters: Painter[] }) => {
 
 const RemoveButton = (p: { id: number }) => {
     const { id } = p;
-    return <Button text="Verwijder schilder" onClickEvent={() => {}} />;
+    const token = useAppSelector(selectToken);
+    if (!token) return <></>;
+    const onClick = (id: number, token: string) => {
+        deletePainter(token, id);
+    };
+    return (
+        <Button
+            text="Verwijder schilder"
+            onClickEvent={() => {
+                onClick(id, token);
+            }}
+        />
+    );
 };
