@@ -8,8 +8,8 @@ import logo from './logo.svg';
 
 function App() {
     return (
-        <div className="App flex flex-col h-screen justify-between">
-            <div className="h-100  bg-blue-700">
+        <div className="App flex flex-col h-screen justify-between select-none">
+            <div className="max-h-40 bg-blue-700">
                 <Navbar />
             </div>
             <div className="mb-auto h-100 bg-blue-600">
