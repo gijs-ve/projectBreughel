@@ -202,12 +202,13 @@ router.post(
         try {
             const { data } = req.body;
             const { name } = data;
-            console.log('NAME', name);
             const newPainter = await Painters.create({ name });
-            console.log(newPainter);
             return res
                 .status(200)
-                .send({ message: 'Succesfully created new painter' });
+                .send({
+                    message: 'Succesfully created new painter',
+                    painter: newPainter,
+                });
         } catch (error) {
             console.log(error);
             return res.status(400).send({ message: messages.serverError });
