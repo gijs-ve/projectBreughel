@@ -11,9 +11,10 @@ const Navbar = () => {
     const token = useAppSelector(selectToken);
     const Links: ReactElement[] = pages.map((i: Page) => {
         if (i.inNavbar || token) {
+            const isRed = token && !i.inNavbar ? true : false;
             return (
                 <Link key={i.path} to={i.path}>
-                    <NavButton text={i.navText} />
+                    <NavButton hasToken={isRed} text={i.navText} />
                 </Link>
             );
         }
