@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { Painting } from '../../../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 export const PaintingFrame = (p: { painting?: Painting }) => {
     const { painting } = p;
