@@ -20,7 +20,7 @@ const Navbar = () => {
         return <div key={i.path} />;
     });
     return (
-        <div className="flex flex-row flex-nowrap justify-center py-12 space-x-5 min-w-24 pr-40">
+        <div className="flex flex-row flex-nowrap justify-center py-12 space-x-5 min-w-24 pr-40 border-b-8 border-b-blue-800">
             <Logo /> {Links}
         </div>
     );

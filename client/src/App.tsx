@@ -12,7 +12,7 @@ function App() {
             <div className="h-100  bg-blue-700">
                 <Navbar />
             </div>
-            <div className="mb-auto h-100 bg-green-500">
+            <div className="mb-auto h-100 bg-blue-600">
                 <Router />
             </div>
             <Footer />
