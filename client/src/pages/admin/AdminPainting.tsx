@@ -225,7 +225,8 @@ export const AdminPainting = () => {
 
 const PainterOptions = (p: Props) => {
     const { painters } = p;
-    if (!painters) return <option value={1}>{'Default'}</option>;
+    if (!painters)
+        return <option value={1}>{'Geen schilders gevonden!'}</option>;
     const options = painters.map((i: Painter) => {
         return (
             <option key={i.id} value={i.id}>
