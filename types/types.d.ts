@@ -88,6 +88,12 @@ export type PaintingState = {
     pages?: PageState;
 };
 
+export type CartState = {
+    products: {
+        paintings: number[];
+    };
+};
+
 export type RawState = {
     userState?: UserState;
     paintingState?: PaintingState;
