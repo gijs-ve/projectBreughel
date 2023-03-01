@@ -1,3 +1,3 @@
 export const Winkelmand = () => {
-    return <>Winkelmand</>;
+    return <>Wasmand</>;
 };
