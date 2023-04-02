@@ -21,7 +21,7 @@ const Navbar = () => {
         return <div key={page.path} />;
     });
     return (
-        <div className="flex flex-row flex-nowrap min-w-24 pl-20 border-b-2 border-b-blue-800 py-4">
+        <div className="flex flex-row flex-nowrap min-w-24 pl-20 border-b-2 border-b-blue-800">
             <Logo />
             <div className="pl-4 flex flex-row">{Links}</div>
         </div>

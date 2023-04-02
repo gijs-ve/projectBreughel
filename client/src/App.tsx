@@ -12,6 +12,8 @@ function App() {
             <div className="max-h-40 bg-blue-700">
                 <Navbar />
             </div>
+            <div className="bg-blue-600 h-8" />
+
             <div className="mb-auto h-100 bg-blue-600">
                 <Router />
             </div>
