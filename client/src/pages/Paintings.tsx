@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { PaintingsList, PaintingDetails } from './paintings';
+import { PaintingsList, PaintingDetails } from './painting';
 
 export const Paintings = () => {
     return (

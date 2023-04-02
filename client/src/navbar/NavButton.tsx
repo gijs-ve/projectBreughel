@@ -1,16 +1,26 @@
+import { useState } from 'react';
+
 export const NavButton = (p: { text: string; hasToken: boolean }) => {
     const { text, hasToken } = p;
     const color = hasToken ? 'red' : 'yellow';
-    console.log(color, text);
+    const [mouseEnter, setMouseEnter] = useState(false);
     return (
         <div
-            className={`text-2xl antialiase border-4 rounded-xl border-yellow-400 max-w-48 px-4 py-1 ${
+            onMouseEnter={() => setMouseEnter(true)}
+            onMouseLeave={() => setMouseEnter(false)}
+            className={`text-1xl h-full	antialiase border-blue-800 px-8 border-top-8 ${
                 hasToken
-                    ? 'bg-red-600 hover:bg-red-400 hover:border-red-400'
-                    : 'bg-yellow-300 hover:bg-yellow-500 hover:border-yellow-400'
+                    ? 'bg-blue-600 hover:bg-red-400 hover:border-blue-400'
+                    : 'bg-blue-700 hover:bg-blue-600 hover:border-yellow-400'
             } text-gray-800 ${hasToken ? '' : ''}`}
         >
-            {text}
+            <div
+                className={`translate-y-1/2 text-yellow-500 ${
+                    mouseEnter ? 'border-b-2 border-yellow-400' : ''
+                }`}
+            >
+                {text}
+            </div>
         </div>
     );
 };

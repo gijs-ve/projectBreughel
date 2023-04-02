@@ -9,20 +9,21 @@ import { useAppSelector } from '../utility/hooks';
 
 const Navbar = () => {
     const token = useAppSelector(selectToken);
-    const Links: ReactElement[] = pages.map((i: Page) => {
-        if (i.inNavbar || token) {
-            const isRed = token && !i.inNavbar ? true : false;
+    const Links: ReactElement[] = pages.map((page: Page) => {
+        if (page.inNavbar || token) {
+            const isRed = token && !page.inNavbar ? true : false;
             return (
-                <Link key={i.path} to={i.path}>
-                    <NavButton hasToken={isRed} text={i.navText} />
+                <Link key={page.path} to={page.path}>
+                    <NavButton hasToken={isRed} text={page.navText} />
                 </Link>
             );
         }
-        return <div key={i.path} />;
+        return <div key={page.path} />;
     });
     return (
-        <div className="flex flex-row flex-nowrap justify-center py-4 space-x-5 min-w-24 pr-40 border-b-8 border-b-blue-800">
-            <Logo /> <div className="flex flex-row  space-x-10">{Links}</div>
+        <div className="flex flex-row flex-nowrap min-w-24 pl-20 border-b-2 border-b-blue-800 py-4">
+            <Logo />
+            <div className="pl-4 flex flex-row">{Links}</div>
         </div>
     );
 };
