@@ -8,7 +8,7 @@ export const NavButton = (p: { text: string; hasToken: boolean }) => {
         <div
             onMouseEnter={() => setMouseEnter(true)}
             onMouseLeave={() => setMouseEnter(false)}
-            className={`text-1xl h-full antialiase max-w-full px-8 ${
+            className={`text-1xl h-full antialiase px-8 ${
                 hasToken
                     ? 'bg-blue-600 hover:bg-red-400 hover:border-blue-400'
                     : 'bg-blue-700 hover:bg-blue-600 hover:border-yellow-400'
