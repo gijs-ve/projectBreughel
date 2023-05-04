@@ -11,7 +11,7 @@ import logo from './logo.svg';
 
 function App() {
     return (
-        <div>
+        <>
             <HeaderWrapper>
                 <Navbar />
             </HeaderWrapper>
@@ -21,7 +21,7 @@ function App() {
             <FooterWrapper>
                 <Footer />
             </FooterWrapper>
-        </div>
+        </>
     );
 }
 
