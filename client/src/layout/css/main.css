@@ -1,0 +1,8 @@
+.main {
+    display: flex;
+    flex-flow: column;
+    background-color: 'red';
+    height: 80vh;
+    padding: 0 5%;
+    flex: 1;
+}
